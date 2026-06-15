@@ -9936,68 +9936,6 @@ window.MathJax = {
   </div><!-- /content-area -->
 </div><!-- /main-layout -->
 
-<script>
-// ===== STATE =====
-let currentGrade = 1;
-let currentUnit = '1-1';
-
-// ===== GRADE SWITCH =====
-function switchGrade(grade) {
-  currentGrade = grade;
-  // Update grade tabs
-  document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`[data-grade="${grade}"]`).classList.add('active');
-  // Update sidebar
-  document.querySelectorAll('.sidebar-grade').forEach(s => s.classList.remove('active'));
-  document.getElementById(`sidebar-${grade}`).classList.add('active');
-  // Switch to first unit of that grade
-  const firstUnit = `${grade}-1`;
-  switchUnit(grade, firstUnit);
-}
-
-// ===== UNIT SWITCH =====
-function switchUnit(grade, unitId) {
-  currentUnit = unitId;
-  // Update all sidebar buttons
-  document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector(`[onclick="switchUnit('${grade}','${unitId}')"]`);
-  if (btn) btn.classList.add('active');
-  // Update content panels
-  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById(`panel-${unitId}`);
-  if (panel) {
-    panel.classList.add('active');
-    renderMath();
-  }
-  // Scroll to top
-  document.getElementById('contentArea').scrollTop = 0;
-}
-
-// ===== SUB-TAB SWITCH =====
-function switchSubTab(unitId, sub) {
-  // Toggle sub-tab buttons
-  document.querySelectorAll(`[id^="stab-${unitId}"]`).forEach(b => b.classList.remove('active'));
-  const activeBtn = document.getElementById(`stab-${unitId}${sub}`);
-  if (activeBtn) activeBtn.classList.add('active');
-  // Toggle sub-panels
-  document.querySelectorAll(`[id^="sp-${unitId}"]`).forEach(p => p.classList.remove('active'));
-  const activePanel = document.getElementById(`sp-${unitId}${sub}`);
-  if (activePanel) activePanel.classList.add('active');
-  renderMath();
-}
-
-// ===== SECTION TOGGLE =====
-function toggleSection(header) {
-  const body = header.nextElementSibling;
-  const arrow = header.querySelector('.section-toggle');
-  if (body.classList.contains('open')) {
-    body.classList.remove('open');
-    arrow.classList.remove('open');
-  } else {
-    body.classList.add('open');
-    arrow.classList.add('open');
-  }
-}
 
 <script>
 // ===== STATE =====
