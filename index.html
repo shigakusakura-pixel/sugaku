@@ -9999,6 +9999,69 @@ function toggleSection(header) {
   }
 }
 
+<script>
+// ===== STATE =====
+let currentGrade = 1;
+let currentUnit = '1-1';
+
+// ===== GRADE SWITCH =====
+function switchGrade(grade) {
+  currentGrade = grade;
+  // Update grade tabs
+  document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-grade="${grade}"]`).classList.add('active');
+  // Update sidebar
+  document.querySelectorAll('.sidebar-grade').forEach(s => s.classList.remove('active'));
+  document.getElementById(`sidebar-${grade}`).classList.add('active');
+  // Switch to first unit of that grade
+  const firstUnit = `${grade}-1`;
+  switchUnit(grade, firstUnit);
+}
+
+// ===== UNIT SWITCH =====
+function switchUnit(grade, unitId) {
+  currentUnit = unitId;
+  // Update all sidebar buttons
+  document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`[onclick="switchUnit('${grade}','${unitId}')"]`);
+  if (btn) btn.classList.add('active');
+  // Update content panels
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(`panel-${unitId}`);
+  if (panel) {
+    panel.classList.add('active');
+    renderMath();
+  }
+  // Scroll to top
+  document.getElementById('contentArea').scrollTop = 0;
+}
+
+// ===== SUB-TAB SWITCH =====
+function switchSubTab(unitId, sub) {
+  // Toggle sub-tab buttons
+  document.querySelectorAll(`[id^="stab-${unitId}"]`).forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById(`stab-${unitId}${sub}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  // Toggle sub-panels
+  document.querySelectorAll(`[id^="sp-${unitId}"]`).forEach(p => p.classList.remove('active'));
+  const activePanel = document.getElementById(`sp-${unitId}${sub}`);
+  if (activePanel) activePanel.classList.add('active');
+  renderMath();
+}
+
+// ===== SECTION TOGGLE =====
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.section-toggle');
+  if (body.classList.contains('open')) {
+    body.classList.remove('open');
+    arrow.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    arrow.classList.add('open');
+  }
+}
+
 // ===== ANSWER TOGGLE =====
 function toggleAnswer(id, btn) {
   const panel = document.getElementById(id);
@@ -10011,6 +10074,12 @@ function toggleAnswer(id, btn) {
     btn.classList.add('open');
     btn.textContent = '閉じる';
     renderMath();
+
+    // 【追加】「答えを見る」を開いたタイミングでFirebaseに送信
+    if (window.sendLearningRecord) {
+      window.sendLearningRecord(currentUnit, id);
+    }
+    // ここまで
   }
 }
 
@@ -10032,5 +10101,72 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+</body>
+</html>
+
+// ===== MATHJAX RENDER =====
+function renderMath(el) {
+  if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+    const target = el ? [el] : [document.body];
+    MathJax.typesetPromise(target).catch(err => console.warn('MathJax:', err));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // MathJax auto-typesets on load; retry after dynamic content
+  setTimeout(() => {
+    if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err => console.warn('MathJax init:', err));
+    }
+  }, 800);
+});
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // ① My スタディ 用のFirebase設定
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQjnlOfeVvWQJHDxGE9cq-jGsYF3uo0PY",
+    authDomain: "mystudy-portal.firebaseapp.com",
+    projectId: "mystudy-portal",
+    storageBucket: "mystudy-portal.firebasestorage.app",
+    messagingSenderId: "62253255474",
+    appId: "1:62253255474:web:817a3cbd1ab3ea63e7e52b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ② URLの「?student=生徒ID」から名札（生徒ID）を取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const studentId = urlParams.get('student') || 'ゲスト';
+
+  // 送信済みの問題を記録するリスト（開閉ごとの重複送信を防ぐため）
+  const sentRecords = new Set();
+
+  // ③ 送信用の処理
+  window.sendLearningRecord = async function(unitId, questionId) {
+    const recordKey = unitId + "-" + questionId;
+
+    // すでに送信済みの問題ならストップ（何もしない）
+    if (sentRecords.has(recordKey)) return;
+    sentRecords.add(recordKey);
+
+    try {
+      await addDoc(collection(db, "learning_records"), {
+        studentId: studentId,
+        subject: "中学数学",
+        unit: unitId,
+        questionId: questionId,
+        action: "答えを確認",
+        timestamp: serverTimestamp()
+      });
+      console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
+    } catch (e) {
+      console.error("記録の送信に失敗しました: ", e);
+    }
+  };
+</script>
 </body>
 </html>
