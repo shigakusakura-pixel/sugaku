@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>中学数学 一問一答</title>
+<title>中学数学 一問一答 | 志学ゼミナール</title>
 <script>
 window.MathJax = {
   tex: {
@@ -268,9 +268,7 @@ window.MathJax = {
     margin-bottom: 18px;
     font-size: 0.95rem;
   }
-  .exp-block {
-    margin-bottom: 20px;
-  }
+  .exp-block { margin-bottom: 20px; }
   .exp-block h4 {
     font-size: 1rem;
     color: var(--navy);
@@ -439,18 +437,6 @@ window.MathJax = {
     margin-top: 8px;
     line-height: 1.8;
   }
-  .wari-small {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 0.9rem;
-    background: var(--gray-light);
-    border-left: 2px solid var(--navy);
-    border-bottom: 2px solid var(--navy);
-    display: inline-block;
-    padding: 4px 14px 4px 8px;
-    line-height: 1.7;
-    border-radius: 2px 0 0 2px;
-    margin: 6px 0;
-  }
 
   /* ===== COMING SOON ===== */
   .coming-soon-card {
@@ -508,11 +494,28 @@ window.MathJax = {
   .sub-panel { display: none; }
   .sub-panel.active { display: block; }
 
-
   @media (max-width: 700px) {
     .content-area { padding: 20px 16px 40px; }
     .sidebar { width: 170px; min-width: 160px; }
     .unit-btn { font-size: 0.8rem; padding: 8px 12px; }
+  }
+
+ /* ===== テーマ別解説表示時のサイズ調整 ===== */
+  #panel-theme {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #panel-theme.active {
+    display: block !important;
+    width: 100% !important;
+  }
+  #panel-theme iframe {
+    width: 100% !important;
+    min-height: 950px !important;
+    border: none !important;
+    display: block !important;
+    margin: 0 !important;
   }
 </style>
 </head>
@@ -535,7 +538,8 @@ window.MathJax = {
   <div class="grade-tab active" data-grade="1" onclick="switchGrade(1)">中１</div>
   <div class="grade-tab" data-grade="2" onclick="switchGrade(2)">中２</div>
   <div class="grade-tab" data-grade="3" onclick="switchGrade(3)">中３</div>
-</div>
+  <div class="grade-tab" onclick="switchGrade('theme')">テーマ別解説</div>
+  </div>
 
 <!-- ===== MAIN LAYOUT ===== -->
 <div class="main-layout">
@@ -752,7 +756,7 @@ window.MathJax = {
 
             <!-- Q2 -->
             <div class="problem-card" id="pc-2">
-              <div class="problem-head">
+              <div class="problem-head"></style>
                 <span class="q-num">Q2</span>
                 <div class="problem-text">次の数を素因数分解せよ。<br>\(24\)</div>
                 <button class="ans-toggle-btn" onclick="toggleAnswer('a-2', this)">答えを見る</button>
@@ -7005,6 +7009,285 @@ window.MathJax = {
     <!-- ============================================================ -->
     <!-- 中3 単元 (Coming Soon) -->
     <!-- ============================================================ -->
+<!-- ============================================================ -->
+    <!-- テーマ別解説 パネル (panel-theme 類題・自動採点完備版) -->
+    <!-- ============================================================ -->
+    <div class="content-panel" id="panel-theme">
+      <div class="unit-header">
+        <span class="unit-badge" style="background:#00A8CD; color:#fff;">特別単元</span>
+        <h2 class="unit-title">一次関数 テーマ別パターン攻略</h2>
+      </div>
+
+      <!-- サブタブバー -->
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" id="stab-theme-a" onclick="switchSubTab('theme','a')">① 式の決定（パターン別）</button>
+        <button class="sub-tab-btn" id="stab-theme-b" onclick="switchSubTab('theme','b')">② 面積の求め方の手順</button>
+        <button class="sub-tab-btn" id="stab-theme-c" onclick="switchSubTab('theme','c')">③ 面積を2等分する直線</button>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- タブ1: 式の決定 -->
+      <!-- ======================================================= -->
+      <div class="sub-panel active" id="sp-theme-a">
+        <div class="section-block">
+          <div class="section-body open">
+            
+            <div style="background: #FBF7EE; border: 2px dashed #C8A96E; border-radius: 8px; padding: 16px; margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 16px; font-weight: bold; color: #7A5A10; margin-bottom: 6px;">【一次関数の式を求める大前提】</div>
+              <p style="margin-bottom:6px;">まず <span style="color:#C8443A; font-weight:bold; font-size:18px;">\(y = ax + b\)</span> と置いてから解き始めること。</p>
+              <div style="background: #ffffff; border: 1px solid #C8A96E; border-radius: 6px; padding: 12px; margin: 12px 0; font-size: 15px;">
+                <p style="margin-bottom: 8px; color: #C8443A; font-weight: bold; font-size: 16px;">
+                  \(a\) ＝ 傾き ＝ 変化の割合 ＝ \(\frac{y\text{の増加量}}{x\text{の増加量}}\)
+                </p>
+                <p style="margin-bottom: 0; color: #C8443A; font-weight: bold;">
+                  \(b\) ＝ 切片 &nbsp; [\(y\text{軸との交点 }(0, b)\)]
+                </p>
+              </div>
+            </div>
+
+            <!-- パターン1 -->
+            <div style="display:inline-block; background:#00A8CD; color:#fff; font-weight:bold; padding:4px 12px; border-radius:20px; margin:16px 0 8px;">パターン1：変化の割合とグラフが通る点</div>
+            <p>最も基本的なパターンであり、すべての一次関数の決定問題の土台となる。</p>
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin:10px 0;">
+              <strong style="color:#7A5A10;">【例題1】</strong><br>
+              変化の割合が \(3\) で、点 \((2, 7)\) を通る一次関数の式を求めよ。
+            </div>
+            <p><b>【考え方・解答】</b><br>
+            求める一次関数の式を \(y = ax + b\) とする。変化の割合が \(3\) であるから、\(a = 3\)。 \(y = 3x + b\) に点 \((2, 7)\) を代入する。<br>
+            \[ 7 = 3 \times 2 + b \implies 7 = 6 + b \implies b = 1 \]</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = 3x + 1\)</div>
+
+            <!-- 類題1 -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
+              <strong style="color:#00A8CD;">【類題1】</strong><br>
+              傾きが \(-2\) で、点 \((3, 1)\) を通る一次関数の式を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-1" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-1" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=-2x+5" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-1', 'score-1', 'wrap-1', 'btn-1', 'y=-2x+7', '-2x+7', '一次関数 - パターン1類題')">✔ 採点する</button>
+            </div>
+            <div id="score-1"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-1" onclick="toggleAns('wrap-1', 'btn-1')">▶ 解答・解説を見る</button>
+            <div id="wrap-1" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">\(y = -2x + 7\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                \(y = -2x + b\) に \(x = 3\), \(y = 1\) を代入する。<br>
+                \[ 1 = -2 \times 3 + b \implies b = 7 \]</p>
+              </div>
+            </div>
+
+            <hr style="margin:28px 0; border:none; border-top:1px solid #DDD5C0;">
+
+            <!-- パターン2 -->
+            <div style="display:inline-block; background:#00A8CD; color:#fff; font-weight:bold; padding:4px 12px; border-radius:20px; margin:8px 0;">パターン2：切片とグラフが通る点</div>
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin:10px 0;">
+              <strong style="color:#7A5A10;">【例題2】</strong><br>
+              グラフの切片が \(-2\) で、点 \((4, 3)\) を通る一次関数の式を求めよ。
+            </div>
+            <p><b>【考え方・解答】</b><br>
+            切片が \(-2\) より \(b = -2\)。 \(y = ax - 2\) に点 \((4, 3)\) を代入する。<br>
+            \[ 3 = a \times 4 - 2 \implies 5 = 4a \implies a = \frac{5}{4} \]</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = \frac{5}{4}x - 2\)</div>
+
+            <!-- 類題2 -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
+              <strong style="color:#00A8CD;">【類題2】</strong><br>
+              切片が \(4\) で、点 \((-2, 10)\) を通る一次関数の式を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-2" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-2" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=-3x+4" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-2', 'score-2', 'wrap-2', 'btn-2', 'y=-3x+4', '-3x+4', '一次関数 - パターン2類題')">✔ 採点する</button>
+            </div>
+            <div id="score-2"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-2" onclick="toggleAns('wrap-2', 'btn-2')">▶ 解答・解説を見る</button>
+            <div id="wrap-2" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">\(y = -3x + 4\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                \(y = ax + 4\) に \(x = -2\), \(y = 10\) を代入する。<br>
+                \[ 10 = -2a + 4 \implies 6 = -2a \implies a = -3 \]</p>
+              </div>
+            </div>
+
+            <hr style="margin:28px 0; border:none; border-top:1px solid #DDD5C0;">
+
+            <!-- パターン3 -->
+            <div style="display:inline-block; background:#00A8CD; color:#fff; font-weight:bold; padding:4px 12px; border-radius:20px; margin:8px 0;">パターン3：条件から変化の割合を算出する</div>
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin:10px 0;">
+              <strong style="color:#7A5A10;">【例題3】</strong><br>
+              \(x\) が \(3\) 増加すると \(y\) は \(4\) 減少し、\(x = -3\) のとき \(y = 2\) となる一次関数の式を求めよ。
+            </div>
+            <p><b>【考え方・解答】</b><br>
+            変化の割合 \(a = \frac{-4}{3} = -\frac{4}{3}\)。 \(y = -\frac{4}{3}x + b\) に点 \((-3, 2)\) を代入する。<br>
+            \[ 2 = -\frac{4}{3} \times (-3) + b \implies 2 = 4 + b \implies b = -2 \]</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = -\frac{4}{3}x - 2\)</div>
+
+            <!-- 類題3 -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
+              <strong style="color:#00A8CD;">【類題3】</strong><br>
+              \(x\) が \(2\) 増加すると \(y\) は \(6\) 増加し、\(x = 1\) のとき \(y = 1\) となる一次関数の式を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-3" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-3" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=3x-2" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-3', 'score-3', 'wrap-3', 'btn-3', 'y=3x-2', '3x-2', '一次関数 - パターン3類題')">✔ 採点する</button>
+            </div>
+            <div id="score-3"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-3" onclick="toggleAns('wrap-3', 'btn-3')">▶ 解答・解説を見る</button>
+            <div id="wrap-3" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">\(y = 3x - 2\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                \(a = \frac{6}{2} = 3\)。 \(y = 3x + b\) に \((1, 1)\) を代入して \(b = -2\)。</p>
+              </div>
+            </div>
+
+            <hr style="margin:28px 0; border:none; border-top:1px solid #DDD5C0;">
+
+            <!-- パターン4 -->
+            <div style="display:inline-block; background:#00A8CD; color:#fff; font-weight:bold; padding:4px 12px; border-radius:20px; margin:8px 0;">パターン4：グラフの通る2点が与えられている</div>
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin:10px 0;">
+              <strong style="color:#7A5A10;">【例題4】</strong><br>
+              2点 \((-1, 4)\) と \((2, -2)\) を通る一次関数の式を求めよ。
+            </div>
+            <p><b>【考え方・解答】</b><br>
+            連立方程式（\(4 = -a + b\)、\(-2 = 2a + b\)）を解くと \(a = -2, b = 2\)。</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = -2x + 2\)</div>
+
+            <!-- 類題4 -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
+              <strong style="color:#00A8CD;">【類題4】</strong><br>
+              2点 \((-2, 9)\) と \((3, -1)\) を通る一次関数の式を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-4" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-4" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=-2x+5" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-4', 'score-4', 'wrap-4', 'btn-4', 'y=-2x+5', '-2x+5', '一次関数 - パターン4類題')">✔ 採点する</button>
+            </div>
+            <div id="score-4"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-4" onclick="toggleAns('wrap-4', 'btn-4')">▶ 解答・解説を見る</button>
+            <div id="wrap-4" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">\(y = -2x + 5\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                \(a = \frac{-1 - 9}{3 - (-2)} = \frac{-10}{5} = -2\)。<br>
+                \(y = -2x + b\) に \((3, -1)\) を代入して \(b = 5\)。</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- タブ2: 面積の求め方の手順 -->
+      <!-- ======================================================= -->
+      <div class="sub-panel" id="sp-theme-b">
+        <div class="section-block">
+          <div class="section-body open">
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
+              <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+              直線 \(y = \frac{1}{2}x + 3\) と直線 \(y = -x + 6\) の交点を A、\(x\) 軸との交点をそれぞれ B, C とするとき、\(\triangle\text{ABC}\) の面積を求めよ。
+            </div>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">1. 各頂点の座標を求める</h3>
+            <p>① 点B（\(x\) 軸交点）： \(0 = \frac{1}{2}x + 3 \implies \text{B}(-6, 0)\)</p>
+            <p>② 点C（\(x\) 軸交点）： \(0 = -x + 6 \implies \text{C}(6, 0)\)</p>
+            <p>③ 点A（連立方程式の交点）： \(-x + 6 = \frac{1}{2}x + 3 \implies \text{A}(2, 4)\)</p>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">2. 底辺と高さを求める</h3>
+            <p>・底辺（横の長さ）： \(6 - (-6) = 12\)</p>
+            <p>・高さ（縦の長さ）： 点Aの \(y\) 座標 \(= 4\)</p>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">3. 面積を計算する</h3>
+            <p>\[ \triangle\text{ABC} = 12 \times 4 \times \frac{1}{2} = 24 \]</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:16px 0;">答え： \(24\)</div>
+
+            <!-- 類題（面積） -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:20px 0 10px;">
+              <strong style="color:#00A8CD;">【類題】</strong><br>
+              直線 \(y = x + 3\) と直線 \(y = -2x + 6\) の交点を A とし、それぞれの直線と \(x\) 軸との交点を B, C とする。<br>
+              \(\triangle\text{ABC}\) の面積を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-area" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-area" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: 12" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-area', 'score-area', 'wrap-area', 'btn-area', '12', '12', '一次関数 - 面積の求め方類題')">✔ 採点する</button>
+            </div>
+            <div id="score-area"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-area" onclick="toggleAns('wrap-area', 'btn-area')">▶ 解答・解説を見る</button>
+            <div id="wrap-area" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">\(12\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                交点 A \((1, 4)\)、B \((-3, 0)\)、C \((3, 0)\)。<br>
+                底辺 BC \(= 3 - (-3) = 6\)、高さ \(= 4\)。<br>
+                \(\text{面積} = 6 \times 4 \times \frac{1}{2} = 12\)。</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- タブ3: 面積を2等分する直線 -->
+      <!-- ======================================================= -->
+      <div class="sub-panel" id="sp-theme-c">
+        <div class="section-block">
+          <div class="section-body open">
+            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
+              <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+              点A\((2, 4)\) を通り、\(\triangle \text{ABC}\)（B\((-6, 0)\), C\((6, 0)\)）の面積を2等分する直線の式を求めよ。
+            </div>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">1. 考え方のポイント</h3>
+            <p>頂点Aを通り \(\triangle\text{ABC}\) の面積を2等分する場合、求める直線は<span style="color:#C8443A; font-weight:bold;">対辺BCの中点</span>を通ればよい。</p>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">2. 座標の計算手順</h3>
+            <div style="border:1.5px solid #2C2C2A; border-radius:6px; padding:12px; margin:12px 0; background:#FAFAF8; text-align:center;">
+              <div style="font-weight:700; color:#8A6A1A; margin-bottom:6px;">【公式】中点の座標</div>
+              <p>2点 \((a, b)\) と \((c, d)\) の中点： \(\left( \frac{a+c}{2}, \; \frac{b+d}{2} \right)\)</p>
+            </div>
+            <p>・BCの中点 M は \(\left( \frac{-6 + 6}{2}, \frac{0 + 0}{2} \right) = (0, 0)\)（原点）</p>
+
+            <h3 style="font-size:16px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:20px 0 10px;">3. 求める直線の式</h3>
+            <p>点 A \((2, 4)\) と 原点 \((0, 0)\) を通る直線 \(y = ax\) に代入する。<br>
+            \[ 4 = 2a \implies a = 2 \]</p>
+            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:16px 0;">答え： \(y = 2x\)</div>
+
+            <!-- 類題（2等分） -->
+            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:20px 0 10px;">
+              <strong style="color:#00A8CD;">【類題】</strong><br>
+              直線 \(y = x + 4\) と直線 \(y = -2x + 10\) の交点を A とし、それぞれの直線と \(x\) 軸との交点を B, C とする。<br>
+              点 A を通り、\(\triangle\text{ABC}\) の面積を2等分する直線の式を求めよ。
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+              <label for="ans-bisect" style="font-weight:bold; font-size:14px;">答え：</label>
+              <input type="text" id="ans-bisect" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=4x-2" autocomplete="off">
+              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-bisect', 'score-bisect', 'wrap-bisect', 'btn-bisect', 'y=4x-2', '4x-2', '一次関数 - 面積2等分類題')">✔ 採点する</button>
+            </div>
+            <div id="score-bisect"></div>
+            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-bisect" onclick="toggleAns('wrap-bisect', 'btn-bisect')">▶ 解答・解説を見る</button>
+            <div id="wrap-bisect" style="display:none; margin-top:8px;">
+              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">\(y = 4x - 2\)</span></p>
+                <p style="margin-top:6px;"><b>【解説】</b><br>
+                1. 交点 \(\text{A}(2, 6)\)、\(\text{B}(-4, 0)\)、\(\text{C}(5, 0)\)<br>
+                2. 辺 BC の中点 M \(\left( \frac{1}{2}, 0 \right)\)<br>
+                3. A \((2, 6)\) と M \(\left( \frac{1}{2}, 0 \right)\) を通る直線の傾き \(a = \frac{6 - 0}{2 - \frac{1}{2}} = 4\)。<br>
+                \(y = 4x + b\) に \((2, 6)\) を代入して \(b = -2\)。よって <b>\(y = 4x - 2\)</b>。</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /panel-theme -->
     <!-- ============================================================ -->
     <!-- 中3・式の展開と因数分解 (3-1) -->
     <!-- ============================================================ -->
@@ -9942,18 +10225,67 @@ window.MathJax = {
 let currentGrade = 1;
 let currentUnit = '1-1';
 
-// ===== GRADE SWITCH =====
-function switchGrade(grade) {
-  currentGrade = grade;
-  // Update grade tabs
-  document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`[data-grade="${grade}"]`).classList.add('active');
-  // Update sidebar
-  document.querySelectorAll('.sidebar-grade').forEach(s => s.classList.remove('active'));
-  document.getElementById(`sidebar-${grade}`).classList.add('active');
-  // Switch to first unit of that grade
-  const firstUnit = `${grade}-1`;
-  switchUnit(grade, firstUnit);
+// ===== GRADE SWITCH (決定版) =====
+function switchGrade(grade, event) {
+  // 1. 学年タブの active 解除 ＆ 選択されたタブの強調
+  document.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
+  const e = event || window.event;
+  if (e && e.currentTarget) {
+    e.currentTarget.classList.add('active');
+  } else if (e && e.target) {
+    e.target.classList.add('active');
+  }
+
+  // 2. すべてのメインコンテンツパネルを非表示
+  document.querySelectorAll('.content-panel').forEach(panel => {
+    panel.classList.remove('active');
+    panel.style.display = 'none';
+  });
+
+  // 3. サイドバーおよびコンテンツ領域の表示制御
+  const sidebar = document.querySelector('.sidebar');
+  const contentArea = document.querySelector('.content-area');
+
+  if (grade === 'theme') {
+    // 【テーマ別解説パネルを表示】
+    const themePanel = document.getElementById('panel-theme');
+    if (themePanel) {
+      themePanel.classList.add('active');
+      themePanel.style.display = 'block';
+    }
+    
+    // サイドバーを隠してコンテンツ表示域を最大化する（右寄り・重なり防止）
+    if (sidebar) sidebar.style.display = 'none';
+    if (contentArea) {
+      contentArea.style.maxWidth = '100%';
+      contentArea.style.padding = '20px 24px';
+    }
+
+  } else {
+    // 【通常の学年（中1〜中3）を表示】
+    const targetPanel = document.getElementById(`panel-${grade}-1`);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+      targetPanel.style.display = 'block';
+    }
+    
+    // 通常表示時はサイドバーを表示し、元のレイアウト幅に戻す
+    if (sidebar) sidebar.style.display = 'block';
+    if (contentArea) {
+      contentArea.style.maxWidth = '860px';
+      contentArea.style.padding = '32px 40px 60px';
+    }
+
+    // 学年ごとのサイドバー描画関数が存在すれば呼び出す
+    if (typeof renderSidebar === 'function') {
+      renderSidebar(grade);
+    }
+  }
+
+  // 数式表示（MathJax）の再適用
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise();
+  }
 }
 
 // ===== UNIT SWITCH =====
