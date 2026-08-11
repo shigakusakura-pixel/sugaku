@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【中2数学】一次関数 テーマ別解説</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<!-- 数式表示ライブラリ (MathJax) -->
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #F7F5F0;
+    color: #2C2C2A;
+    line-height: 1.6;
+    padding: 20px 16px;
+  }
+.container {
+    max-width: 100%; /* ← 760px から 100% に変更 */
+    margin: 0 auto;
+    background: #ffffff;
+    /* ...以下同じ */
+  }
+  /* ポータル戻るナビ */
+  .back-link {
+    display: inline-block;
+    font-size: 13.5px;
+    color: #8A6A1A;
+    text-decoration: none;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* サブタブUI */
+  .sub-tab-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #00A8CD;
+    padding-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: #EBF8FA;
+    color: #00819E;
+    border: 1px solid #00A8CD;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .tab-btn:hover {
+    background: #D8F2F6;
+  }
+  .tab-btn.active {
+    background: #00A8CD;
+    color: #ffffff;
+  }
+
+  /* タブコンテンツ制御 */
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+
+  /* コンテンツ内共通パーツ */
+  .header-tag {
+    background: #00A8CD;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  .pattern-label {
+    display: inline-block;
+    background: #00A8CD;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin: 32px 0 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+  h2 {
+    font-size: 16.5px;
+    color: #7A5A10;
+    border-bottom: 2px solid #C8A96E;
+    padding-bottom: 4px;
+    margin: 28px 0 12px;
+    font-family: 'Noto Serif JP', serif;
+  }
+  p {
+    font-size: 14.5px;
+    margin-bottom: 10px;
+  }
+  .box-premise {
+    background: #FBF7EE;
+    border: 2px dashed #C8A96E;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0 24px;
+    text-align: center;
+  }
+  .box-prob {
+    background: #FBF7EE;
+    border: 1.5px solid #C8A96E;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .box-ruidai {
+    background: #FAFAF8;
+    border: 1.5px dashed #00A8CD;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0 10px;
+  }
+  .box-point {
+    border: 1.5px solid #2C2C2A;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    background: #FAFAF8;
+  }
+  .box-step {
+    background: #EBF8FA;
+    border: 2px solid #00A8CD;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+  }
+  .graph-container {
+    text-align: center;
+    margin: 16px 0;
+    background: #FAFAF8;
+    border: 1px solid #EDE5D0;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  svg { max-width: 100%; height: auto; }
+  .highlight { color: #C8443A; font-weight: 700; }
+  .ans-text { font-size: 18px; color: #C8443A; font-weight: 700; text-align: center; margin: 12px 0; }
+
+  /* 採点エリア */
+  .answer-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .math-input {
+    font-size: 15px;
+    padding: 7px 12px;
+    border: 1.5px solid #C8A96E;
+    border-radius: 6px;
+    outline: none;
+    width: 200px;
+    font-family: inherit;
+  }
+  .math-input:focus {
+    border-color: #00A8CD;
+    background: #F4FBFD;
+  }
+  .check-btn {
+    background: #C8A96E;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .12s;
+  }
+  .check-btn:hover { background: #B8964A; }
+  .score-box {
+    background: #FBF7EE;
+    border: 1.5px solid #C8A96E;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #6A5A40;
+    margin: 10px 0;
+    text-align: center;
+  }
+  .toggle-btn {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid #C8A96E;
+    border-radius: 6px;
+    padding: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #8A6A1A;
+    margin-top: 6px;
+  }
+  .toggle-btn:hover { background: #F5EDDA; }
+  .ans-wrap { display: none; margin-top: 8px; }
+  .ans-wrap.open { display: block; }
+
+  hr.pattern-divider {
+    border: none;
+    border-top: 1px solid #DDD5C0;
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <a href="index.html" class="back-link">← ポータル（トップ）へ戻る</a>
+
+  <!-- サブタブ ナビゲーション -->
+  <div class="sub-tab-nav">
+    <button class="tab-btn active" onclick="switchTab('tab-patterns', this)">一次関数の式 パターン別</button>
+    <button class="tab-btn" onclick="switchTab('tab-area-step', this)">面積を求め方の手順</button>
+    <button class="tab-btn" onclick="switchTab('tab-bisect', this)">面積を2等分する直線</button>
+  </div>
+
+
+  <!-- ==========================================
+       TAB 1: 一次関数の式 パターン別
+  ========================================== -->
+  <div id="tab-patterns" class="tab-content active">
+    <div class="header-tag">【一次関数】式の決定（パターン別攻略）</div>
+
+    <div class="box-premise">
+      <div style="font-size: 16px; font-weight: bold; color: #7A5A10; margin-bottom: 6px;">【一次関数の式を求める大前提】</div>
+      <p style="margin-bottom:6px;">まず <span class="highlight" style="font-size:18px;">$y = ax + b$</span> と置いてから解き始めること。</p>
+      <div style="background: #ffffff; border: 1px solid #C8A96E; border-radius: 6px; padding: 12px; margin: 12px 0; font-size: 15px;">
+        <p style="margin-bottom: 8px; color: #C8443A; font-weight: bold; font-size: 16px;">
+          $a$ ＝ 傾き ＝ 変化の割合 ＝ $\displaystyle\frac{y\text{の増加量}}{x\text{の増加量}}$
+        </p>
+        <p style="margin-bottom: 0; color: #C8443A; font-weight: bold;">
+          $b$ ＝ 切片 &nbsp; [$y\text{軸との交点 }(0, b)$]
+        </p>
+      </div>
+      <p style="font-size:13.5px; color:#555; margin-bottom:0;">問題文の手がかりから $a$ や $b$ の値を<b>求め</b>、式を完成させる。</p>
+    </div>
+
+    <!-- パターン1 -->
+    <div class="pattern-label">パターン1：変化の割合とグラフが通る点</div>
+    <p>最も基本的なパターンであり、すべての一次関数の決定問題の土台となる。</p>
+    <div class="box-prob">
+      <strong style="color:#7A5A10;">【例題1】</strong><br>
+      変化の割合が $3$ で、点 $(2, 7)$ を通る一次関数の式を求めよ。
+    </div>
+    <p><b>【考え方・解答】</b></p>
+    <p>求める一次関数の式を $y = ax + b$ とする。<br>
+    変化の割合が $3$ であるから、$a = 3$。 $y = 3x + b$ に点 $(2, 7)$ を代入する。<br>
+    $$ 7 = 3 \times 2 + b \implies 7 = 6 + b \implies b = 1 $$</p>
+    <div class="ans-text">答え： $y = 3x + 1$</div>
+
+    <div class="box-ruidai">
+      <strong style="color:#00A8CD;">【類題1】</strong><br>
+      傾きが $-2$ で、点 $(3, 1)$ を通る一次関数の式を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-1" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-1" class="math-input" placeholder="例: y=-2x+5" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-1', 'score-1', 'wrap-1', 'btn-1', 'y=-2x+7', '-2x+7', '一次関数 - パターン1類題')">✔ 採点する</button>
+    </div>
+    <div id="score-1"></div>
+    <button class="toggle-btn" id="btn-1" onclick="toggleAns('wrap-1', 'btn-1')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-1">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">$y = -2x + 7$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        $y = -2x + b$ に $x = 3$, $y = 1$ を代入する。<br>
+        $$ 1 = -2 \times 3 + b \implies b = 7 $$</p>
+      </div>
+    </div>
+
+    <hr class="pattern-divider">
+
+    <!-- パターン2 -->
+    <div class="pattern-label">パターン2：切片とグラフが通る点</div>
+    <div class="box-prob">
+      <strong style="color:#7A5A10;">【例題2】</strong><br>
+      グラフの切片が $-2$ で、点 $(4, 3)$ を通る一次関数の式を求めよ。
+    </div>
+    <p><b>【考え方・解答】</b></p>
+    <p>切片が $-2$ より $b = -2$。 $y = ax - 2$ に点 $(4, 3)$ を代入する。<br>
+    $$ 3 = a \times 4 - 2 \implies 5 = 4a \implies a = \frac{5}{4} $$</p>
+    <div class="ans-text">答え： $y = \frac{5}{4}x - 2$</div>
+
+    <div class="box-ruidai">
+      <strong style="color:#00A8CD;">【類題2】</strong><br>
+      切片が $4$ で、点 $(-2, 10)$ を通る一次関数の式を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-2" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-2" class="math-input" placeholder="例: y=-3x+4" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-2', 'score-2', 'wrap-2', 'btn-2', 'y=-3x+4', '-3x+4', '一次関数 - パターン2類題')">✔ 採点する</button>
+    </div>
+    <div id="score-2"></div>
+    <button class="toggle-btn" id="btn-2" onclick="toggleAns('wrap-2', 'btn-2')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-2">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">$y = -3x + 4$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        $y = ax + 4$ に $x = -2$, $y = 10$ を代入する。<br>
+        $$ 10 = -2a + 4 \implies 6 = -2a \implies a = -3 $$</p>
+      </div>
+    </div>
+
+    <hr class="pattern-divider">
+
+    <!-- パターン3 -->
+    <div class="pattern-label">パターン3：条件から変化の割合を算出する</div>
+    <div class="box-prob">
+      <strong style="color:#7A5A10;">【例題3】</strong><br>
+      $x$ が $3$ 増加すると $y$ は $4$ 減少し、$x = -3$ のとき $y = 2$ となる一次関数の式を求めよ。
+    </div>
+    <p><b>【考え方・解答】</b></p>
+    <p>変化の割合 $a = \frac{-4}{3} = -\frac{4}{3}$。<br>
+    $y = -\frac{4}{3}x + b$ に点 $(-3, 2)$ を代入する。<br>
+    $$ 2 = -\frac{4}{3} \times (-3) + b \implies 2 = 4 + b \implies b = -2 $$</p>
+    <div class="ans-text">答え： $y = -\frac{4}{3}x - 2$</div>
+
+    <div class="box-ruidai">
+      <strong style="color:#00A8CD;">【類題3】</strong><br>
+      $x$ が $2$ 増加すると $y$ は $6$ 増加し、$x = 1$ のとき $y = 1$ となる一次関数の式を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-3" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-3" class="math-input" placeholder="例: y=3x-2" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-3', 'score-3', 'wrap-3', 'btn-3', 'y=3x-2', '3x-2', '一次関数 - パターン3類題')">✔ 採点する</button>
+    </div>
+    <div id="score-3"></div>
+    <button class="toggle-btn" id="btn-3" onclick="toggleAns('wrap-3', 'btn-3')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-3">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">$y = 3x - 2$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        $a = \frac{6}{2} = 3$。 $y = 3x + b$ に $(1, 1)$ を代入して $b = -2$。</p>
+      </div>
+    </div>
+
+    <hr class="pattern-divider">
+
+    <!-- パターン4 -->
+    <div class="pattern-label">パターン4：グラフの通る2点が与えられている</div>
+    <div class="box-prob">
+      <strong style="color:#7A5A10;">【例題4】</strong><br>
+      2点 $(-1, 4)$ と $(2, -2)$ を通る一次関数の式を求めよ。
+    </div>
+    <p><b>【考え方・解答】</b></p>
+    <div style="background: #FFF5F5; border: 1px solid #C8443A; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 13.5px; color: #C8443A; font-weight: bold;">
+      ※ 傾き $a$ は、グラフが右下がりのときは $-$（マイナス）がつくことを確認！
+    </div>
+    <p>連立方程式（$4 = -a + b$、$-2 = 2a + b$）を解くと $a = -2, b = 2$。</p>
+    <div class="ans-text">答え： $y = -2x + 2$</div>
+
+    <div class="box-ruidai">
+      <strong style="color:#00A8CD;">【類題4】</strong><br>
+      2点 $(-2, 9)$ と $(3, -1)$ を通る一次関数の式を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-4" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-4" class="math-input" placeholder="例: y=-2x+5" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-4', 'score-4', 'wrap-4', 'btn-4', 'y=-2x+5', '-2x+5', '一次関数 - パターン4類題')">✔ 採点する</button>
+    </div>
+    <div id="score-4"></div>
+    <button class="toggle-btn" id="btn-4" onclick="toggleAns('wrap-4', 'btn-4')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-4">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:15px;">$y = -2x + 5$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        $a = \frac{-1 - 9}{3 - (-2)} = \frac{-10}{5} = -2$。<br>
+        $y = -2x + b$ に $(3, -1)$ を代入して $b = 5$。</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       TAB 2: 面積を求め方の手順
+  ========================================== -->
+  <div id="tab-area-step" class="tab-content">
+    <div class="header-tag">【一次関数】面積の求め方の手順</div>
+
+    <div class="box-prob">
+      <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+      次の図で、$\triangle\text{ABC}$ の面積を求めよ。
+    </div>
+
+    <div class="graph-container" style="position: relative; max-width: 420px; margin: 16px auto;">
+      <div style="position: absolute; top: 10px; right: 20px; font-size: 15px; z-index: 10;">$y = \frac{1}{2}x + 3$</div>
+      <div style="position: absolute; bottom: 15px; right: 25px; font-size: 15px; z-index: 10;">$y = -x + 6$</div>
+      <svg width="380" height="220" viewBox="-190 -140 380 220" xmlns="http://www.w3.org/2000/svg">
+        <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.5" />
+        <polygon points="160,0 152,-4 152,4" fill="#333" />
+        <text x="168" y="4" font-size="14" font-style="italic">x</text>
+        <line x1="0" y1="50" x2="0" y2="-130" stroke="#333" stroke-width="1.5" />
+        <polygon points="0,-130 -4,-122 4,-122" fill="#333" />
+        <text x="-12" y="-125" font-size="14" font-style="italic">y</text>
+        <text x="-12" y="16" font-size="12" font-style="italic">O</text>
+        <line x1="-150" y1="45" x2="130" y2="-95" stroke="#333" stroke-width="1.5" />
+        <line x1="-50" y1="-110" x2="100" y2="40" stroke="#333" stroke-width="1.5" />
+        <circle cx="20" y="-40" r="3.5" fill="#333" /><text x="18" y="-50" font-size="14" font-weight="bold">A</text>
+        <circle cx="-120" y="0" r="3.5" fill="#333" /><text x="-125" y="-10" font-size="14" font-weight="bold">B</text>
+        <circle cx="60" y="0" r="3.5" fill="#333" /><text x="65" y="-10" font-size="14" font-weight="bold">C</text>
+      </svg>
+    </div>
+
+    <h2>1. 各頂点の座標を求める</h2>
+    <p>① 点B（$x$ 軸交点）： $0 = \frac{1}{2}x + 3 \implies \text{B}(-6, 0)$</p>
+    <p>② 点C（$x$ 軸交点）： $0 = -x + 6 \implies \text{C}(6, 0)$</p>
+    <p>③ 点A（連立方程式の交点）： $-x + 6 = \frac{1}{2}x + 3 \implies \text{A}(2, 4)$</p>
+
+    <h2>2. 底辺と高さを求める</h2>
+    <div class="graph-container" style="position: relative; max-width: 420px; margin: 16px auto;">
+      <svg width="380" height="240" viewBox="-190 -140 380 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow-left" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 10 0 L 0 5 L 10 10 z" fill="#C8443A"/></marker>
+          <marker id="arrow-right" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C8443A"/></marker>
+        </defs>
+        <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.5" />
+        <line x1="0" y1="70" x2="0" y2="-130" stroke="#333" stroke-width="1.5" />
+        <line x1="-150" y1="45" x2="130" y2="-95" stroke="#AAA" stroke-width="1" />
+        <line x1="-50" y1="-110" x2="100" y2="40" stroke="#AAA" stroke-width="1" />
+        <line x1="20" y1="-40" x2="20" y2="0" stroke="#C8443A" stroke-width="1.5" stroke-dasharray="3" />
+        <circle cx="20" y="-40" r="4" fill="#C8443A" /><text x="12" y="-52" font-size="13" font-weight="bold">A</text><text x="28" y="-52" font-size="12" fill="#C8443A" font-weight="bold">(2, 4)</text>
+        <circle cx="-120" y="0" r="4" fill="#C8443A" /><text x="-125" y="-12" font-size="13" font-weight="bold">B</text><text x="-155" y="-28" font-size="12" fill="#C8443A" font-weight="bold">(-6, 0)</text>
+        <circle cx="60" y="0" r="4" fill="#C8443A" /><text x="55" y="-12" font-size="13" font-weight="bold">C</text><text x="70" y="4" font-size="12" fill="#C8443A" font-weight="bold">(6, 0)</text>
+        <text x="28" y="-15" font-size="13" fill="#C8443A" font-weight="bold">高さ = 4</text>
+        <line x1="-120" y1="35" x2="60" y2="35" stroke="#C8443A" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)" />
+        <text x="-50" y="58" font-size="15" fill="#C8443A" font-weight="bold">底辺 = 12</text>
+      </svg>
+    </div>
+    <p>・底辺（横）： $6 - (-6) = 12$</p>
+    <p>・高さ（縦）： 点Aの $y$ 座標 $= 4$</p>
+
+    <h2>3. 面積を計算する</h2>
+    <p>$$ \triangle\text{ABC} = 12 \times 4 \times \frac{1}{2} = 24 $$</p>
+    <div class="ans-text">答え： $24$</div>
+
+    <div class="box-step">
+      <div style="font-weight:bold; color:#00A8CD; font-size:16px; margin-bottom:8px;">【まとめ】面積を求める手順</div>
+      <p style="margin-bottom:4px;"><b>❶ 各頂点の座標を求める</b>（連立方程式や $y=0$ の代入）</p>
+      <p style="margin-bottom:4px;"><b>❷ 座標から長さを求める</b>（$\text{長さ} = \text{座標(大)} - \text{座標(小)}$）</p>
+      <p style="margin-bottom:0;"><b>❸ 底辺と高さを使って面積を計算する</b></p>
+    </div>
+
+    <div class="box-ruidai">
+      <strong>【類題】</strong><br>
+      直線 $y = x + 3$ と直線 $y = -2x + 6$ の交点を A とし、それぞれの直線と $x$ 軸との交点を B, C とする。<br>
+      $\triangle\text{ABC}$ の面積を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-area" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-area" class="math-input" placeholder="例: 12" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-area', 'score-area', 'wrap-area', 'btn-area', '12', '12', '一次関数 - 面積の求め方類題')">✔ 採点する</button>
+    </div>
+    <div id="score-area"></div>
+    <button class="toggle-btn" id="btn-area" onclick="toggleAns('wrap-area', 'btn-area')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-area">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">$12$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        交点 A $(1, 4)$、B $(-3, 0)$、C $(3, 0)$。<br>
+        底辺 BC $= 3 - (-3) = 6$、高さ $= 4$。<br>
+        $\text{面積} = 6 \times 4 \times \frac{1}{2} = 12$。</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       TAB 3: 面積を2等分する直線
+  ========================================== -->
+  <div id="tab-bisect" class="tab-content">
+    <div class="header-tag">【一次関数】面積を2等分する直線の式は？</div>
+
+    <p>面積を2等分する問題の考え方と計算手順を整理する。</p>
+
+    <div class="box-prob">
+      <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+      次の図で、点Aを通り $\triangle \text{ABC}$ の面積を2等分する直線の式を求めよ。
+    </div>
+
+    <h2>1. 考え方のポイント</h2>
+    <p>頂点Aを通り $\triangle\text{ABC}$ の面積を2等分する場合、求める直線は<span class="highlight">対辺BCの中点</span>を通ればよい。</p>
+
+    <div class="graph-container">
+      <svg width="340" height="120" viewBox="-150 -25 340 120" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 -90,75 90,75" fill="none" stroke="#333" stroke-width="1.5" />
+        <text x="-5" y="-10" font-size="14" font-weight="bold">A</text>
+        <text x="-110" y="80" font-size="14" font-weight="bold">B</text>
+        <text x="95" y="80" font-size="14" font-weight="bold">C</text>
+        <line x1="-15" y1="-15" x2="15" y2="95" stroke="#C8443A" stroke-width="2" />
+        <circle cx="0" y="75" r="4" fill="#C8443A" />
+        <rect x="55" y="18" width="125" height="30" rx="15" fill="#fff" stroke="#333" stroke-width="1.5" />
+        <text x="65" y="38" font-size="12" font-weight="bold">中点を通過すればOK</text>
+      </svg>
+    </div>
+
+    <h2>2. 座標の計算手順</h2>
+    <div class="box-point" style="text-align:center;">
+      <div style="font-weight:700; color:#8A6A1A; margin-bottom:6px;">【公式】中点の座標</div>
+      <p>2点 $(a, b)$ と $(c, d)$ の中点： $\displaystyle \left( \frac{a+c}{2}, \; \frac{b+d}{2} \right)$</p>
+    </div>
+
+    <p>・交点 $\text{A}(2, 4)$、 $\text{B}(-6, 0)$、 $\text{C}(6, 0)$</p>
+    <p>・BCの中点 M は $\left( \frac{-6 + 6}{2}, \frac{0 + 0}{2} \right) = (0, 0)$（原点）</p>
+
+    <h2>3. 求める直線の式</h2>
+    <p>点 A $(2, 4)$ と 原点 $(0, 0)$ を通る直線 $y = ax$ に代入する。</p>
+    <p>$$ 4 = 2a \implies a = 2 $$</p>
+    <div class="ans-text">答え： $y = 2x$</div>
+
+    <div class="box-ruidai">
+      <strong>【類題】</strong><br>
+      直線 $y = x + 4$ と直線 $y = -2x + 10$ の交点を A とし、それぞれの直線と $x$ 軸との交点を B, C とする。<br>
+      点 A を通り、$\triangle\text{ABC}$ の面積を2等分する直線の式を求めよ。
+    </div>
+    <div class="answer-input-area">
+      <label for="ans-bisect" style="font-weight:bold; font-size:14px;">答え：</label>
+      <input type="text" id="ans-bisect" class="math-input" placeholder="例: y=4x-2" autocomplete="off">
+      <button class="check-btn" onclick="checkQuiz('ans-bisect', 'score-bisect', 'wrap-bisect', 'btn-bisect', 'y=4x-2', '4x-2', '一次関数 - 面積2等分類題')">✔ 採点する</button>
+    </div>
+    <div id="score-bisect"></div>
+    <button class="toggle-btn" id="btn-bisect" onclick="toggleAns('wrap-bisect', 'btn-bisect')">▶ 解答・解説を見る</button>
+    <div class="ans-wrap" id="wrap-bisect">
+      <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px; margin-top:6px;">
+        <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">$y = 4x - 2$</span></p>
+        <p style="margin-top:6px;"><b>【解説】</b><br>
+        1. 交点 $\text{A}(2, 6)$、$\text{B}(-4, 0)$、$\text{C}(5, 0)$<br>
+        2. 辺 BC の中点 M $\left( \frac{1}{2}, 0 \right)$<br>
+        3. A $(2, 6)$ と M $\left( \frac{1}{2}, 0 \right)$ を通る直線の傾き $a = \frac{6 - 0}{2 - \frac{1}{2}} = 4$。<br>
+        $y = 4x + b$ に $(2, 6)$ を代入して $b = -2$。よって <b>$y = 4x - 2$</b>。</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// サブタブ切り替えロジック
+function switchTab(tabId, btnEl) {
+  // すべてのタブコンテンツを非表示
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  // すべてのタブボタンのactiveクラスを解除
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  
+  // 対象のタブとボタンを有効化
+  document.getElementById(tabId).classList.add('active');
+  btnEl.classList.add('active');
+}
+
+// 共通自動採点ロジック
+function checkQuiz(inputId, scoreId, wrapId, btnId, target1, target2, titleName) {
+  const inputEl = document.getElementById(inputId);
+  const scoreArea = document.getElementById(scoreId);
+  
+  let val = inputEl.value.replace(/\s+/g, '').toLowerCase();
+  
+  if (!val) {
+    scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D;">答えを入力してください。</div>';
+    return;
+  }
+
+  const isCorrect = (val === target1.toLowerCase() || val === target2.toLowerCase());
+
+  if (isCorrect) {
+    scoreArea.innerHTML = `<div class="score-box" style="color:#3B6D11; background:#EAF3DE; border-color:#3B6D11;">🎉 ⭕ 正解！完璧です！（答え: ${target1}）</div>`;
+    document.getElementById(wrapId).classList.add('open');
+    document.getElementById(btnId).textContent = '▼ 解答・解説を閉じる';
+  } else {
+    scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D; background:#FCEBEB; border-color:#A32D2D;">❌ 不正解... もう一度計算してみよう！</div>';
+  }
+
+  // Firebase連携
+  if (window.sendResultToFirebase) {
+    window.sendResultToFirebase("数学", titleName, isCorrect ? 1 : 0, 1);
+  }
+}
+
+// 折りたたみ解説表示ロジック
+function toggleAns(wrapId, btnId) {
+  const wrap = document.getElementById(wrapId);
+  const btn = document.getElementById(btnId);
+  const isOpen = wrap.classList.toggle('open');
+  btn.textContent = isOpen ? '▼ 解答・解説を閉じる' : '▶ 解答・解説を見る';
+}
+</script>
+
+</body>
+</html>
