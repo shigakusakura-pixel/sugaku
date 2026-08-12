@@ -7193,7 +7193,7 @@ window.MathJax = {
         直線 \(y = \frac{1}{2}x + 3\) と直線 \(y = -x + 6\) の交点を A、 \(x\) 軸との交点をそれぞれ B, C とするとき、\(\triangle\text{ABC}\) の面積を求めよ。
       </div>
 
-      <!-- グラフ表示①（修正済み） -->
+      <!-- グラフ表示①（全交点ミリ単位で正確に修正） -->
       <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:12px;">
         <svg width="360" height="200" viewBox="-180 -130 360 200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
           <!-- 軸 -->
@@ -7204,16 +7204,23 @@ window.MathJax = {
           <polygon points="0,-120 -4,-112 4,-112" fill="#333" />
           <text x="-12" y="-115" font-size="13" font-style="italic">y</text>
           <text x="-12" y="16" font-size="12" font-style="italic">O</text>
-          <!-- 直線1 (水色: y = 0.5x + 3) & 直線2 (茶色: y = -x + 6) -->
-          <line x1="-160" y1="20" x2="120" y2="-120" stroke="#00A8CD" stroke-width="2" />
-          <line x1="-40" y1="-120" x2="110" y2="30" stroke="#C8A96E" stroke-width="2" />
-          <!-- 頂点 A(2,4), B(-6,0), C(6,0) 正確な交点座標 -->
+          
+          <!-- 直線1 (水色: y = 0.5x + 3) -> (-160, 20) から (160, -140) -->
+          <line x1="-160" y1="20" x2="160" y2="-140" stroke="#00A8CD" stroke-width="2" />
+          <!-- 直線2 (茶色: y = -x + 6) -> (-40, -120) から (150, 70) -->
+          <line x1="-40" y1="-120" x2="150" y2="70" stroke="#C8A96E" stroke-width="2" />
+
+          <!-- 頂点 A(2,4) = (20, -40) -->
           <circle cx="20" y="-40" r="4.5" fill="#C8443A" />
           <text x="18" y="-52" font-size="14" font-weight="bold">A</text>
+          
+          <!-- 頂点 B(-6,0) = (-120, 0) -->
           <circle cx="-120" y="0" r="4.5" fill="#C8443A" />
           <text x="-125" y="-10" font-size="14" font-weight="bold">B</text>
-          <circle cx="60" y="0" r="4.5" fill="#C8443A" />
-          <text x="65" y="-10" font-size="14" font-weight="bold">C</text>
+          
+          <!-- 頂点 C(6,0) = (120, 0) -->
+          <circle cx="120" y="0" r="4.5" fill="#C8443A" />
+          <text x="125" y="-10" font-size="14" font-weight="bold">C</text>
         </svg>
       </div>
 
@@ -7233,20 +7240,27 @@ window.MathJax = {
           </defs>
           <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.5" />
           <line x1="0" y1="60" x2="0" y2="-120" stroke="#333" stroke-width="1.5" />
-          <line x1="-160" y1="20" x2="120" y2="-120" stroke="#AAA" stroke-width="1.2" />
-          <line x1="-40" y1="-120" x2="110" y2="30" stroke="#AAA" stroke-width="1.2" />
+          
+          <line x1="-160" y1="20" x2="160" y2="-140" stroke="#AAA" stroke-width="1.2" />
+          <line x1="-40" y1="-120" x2="150" y2="70" stroke="#AAA" stroke-width="1.2" />
+          
           <!-- 高さ（破線） -->
           <line x1="20" y1="-40" x2="20" y2="0" stroke="#C8443A" stroke-width="1.5" stroke-dasharray="3" />
+          
           <circle cx="20" y="-40" r="4.5" fill="#C8443A" />
           <text x="12" y="-52" font-size="13" font-weight="bold">A(2, 4)</text>
+
           <circle cx="-120" y="0" r="4.5" fill="#C8443A" />
           <text x="-155" y="-12" font-size="12" fill="#C8443A" font-weight="bold">B(-6, 0)</text>
-          <circle cx="60" y="0" r="4.5" fill="#C8443A" />
-          <text x="55" y="-12" font-size="12" fill="#C8443A" font-weight="bold">C(6, 0)</text>
+
+          <circle cx="120" y="0" r="4.5" fill="#C8443A" />
+          <text x="115" y="-12" font-size="12" fill="#C8443A" font-weight="bold">C(6, 0)</text>
+
           <text x="28" y="-15" font-size="13" fill="#C8443A" font-weight="bold">高さ = 4</text>
+          
           <!-- 底辺矢印 -->
-          <line x1="-120" y1="35" x2="60" y2="35" stroke="#C8443A" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)" />
-          <text x="-45" y="55" font-size="14" fill="#C8443A" font-weight="bold">底辺 = 12</text>
+          <line x1="-120" y1="35" x2="120" y2="35" stroke="#C8443A" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)" />
+          <text x="-20" y="55" font-size="14" fill="#C8443A" font-weight="bold">底辺 = 12</text>
         </svg>
       </div>
 
@@ -7299,17 +7313,18 @@ window.MathJax = {
         <p style="font-size: 13.5px; margin-bottom: 8px;">
           直線 \(y = \frac{1}{2}x + 3\) と 直線 \(y = -x + 6\) の交点 <b>A\((2, 4)\)</b>、 \(x\) 軸交点 <b>B\((-6, 0)\)</b>、 <b>C\((6, 0)\)</b>
         </p>
-        <!-- 前提グラフの再掲 -->
+        <!-- 前提グラフの再掲（全交点正確配置） -->
         <div style="text-align:center; background:#ffffff; border:1px solid #BCE5ED; border-radius:6px; padding:8px; margin-top:8px;">
           <svg width="320" height="150" viewBox="-160 -100 320 150" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
             <line x1="-140" y1="0" x2="140" y2="0" stroke="#333" stroke-width="1.2" />
             <line x1="0" y1="40" x2="0" y2="-90" stroke="#333" stroke-width="1.2" />
-            <!-- 直線1 & 直線2 -->
-            <line x1="-140" y1="18" x2="110" y2="-107" stroke="#AAA" stroke-width="1" />
-            <line x1="-35" y1="-105" x2="95" y2="25" stroke="#AAA" stroke-width="1" />
+            
+            <line x1="-140" y1="18" x2="140" y2="-122" stroke="#AAA" stroke-width="1" />
+            <line x1="-35" y1="-105" x2="135" y2="65" stroke="#AAA" stroke-width="1" />
+            
             <circle cx="18" y="-36" r="3.5" fill="#C8443A" /><text x="22" y="-42" font-size="12" font-weight="bold">A(2, 4)</text>
             <circle cx="-108" y="0" r="3.5" fill="#C8443A" /><text x="-135" y="-8" font-size="11" font-weight="bold">B(-6, 0)</text>
-            <circle cx="54" y="0" r="3.5" fill="#C8443A" /><text x="58" y="-8" font-size="11" font-weight="bold">C(6, 0)</text>
+            <circle cx="108" y="0" r="3.5" fill="#C8443A" /><text x="112" y="-8" font-size="11" font-weight="bold">C(6, 0)</text>
           </svg>
         </div>
       </div>
@@ -7375,7 +7390,6 @@ window.MathJax = {
     </div>
   </div>
 </div>
-    </div>
 
     </div><!-- /panel-theme -->
     <!-- ============================================================ -->
