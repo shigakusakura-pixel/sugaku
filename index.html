@@ -10303,19 +10303,27 @@ function switchUnit(grade, unitId) {
   document.getElementById('contentArea').scrollTop = 0;
 }
 
-// ===== SUB-TAB SWITCH =====
+// ===== SUB-TAB SWITCH (修正版) =====
 function switchSubTab(unitId, sub) {
   // Toggle sub-tab buttons
   document.querySelectorAll(`[id^="stab-${unitId}"]`).forEach(b => b.classList.remove('active'));
-  const activeBtn = document.getElementById(`stab-${unitId}${sub}`);
+  const activeBtn = document.getElementById(`stab-${unitId}-${sub}`); // ← "-" を追加
   if (activeBtn) activeBtn.classList.add('active');
+  
   // Toggle sub-panels
-  document.querySelectorAll(`[id^="sp-${unitId}"]`).forEach(p => p.classList.remove('active'));
-  const activePanel = document.getElementById(`sp-${unitId}${sub}`);
-  if (activePanel) activePanel.classList.add('active');
+  document.querySelectorAll(`[id^="sp-${unitId}"]`).forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none'; // ← 確実に非表示にする
+  });
+  
+  const activePanel = document.getElementById(`sp-${unitId}-${sub}`); // ← "-" を追加
+  if (activePanel) {
+    activePanel.classList.add('active');
+    activePanel.style.display = 'block'; // ← 確実に表示する
+  }
+  
   renderMath();
 }
-
 // ===== SECTION TOGGLE =====
 function toggleSection(header) {
   const body = header.nextElementSibling;
