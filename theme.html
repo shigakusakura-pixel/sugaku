@@ -22,11 +22,10 @@
     line-height: 1.6;
     padding: 20px 16px;
   }
-.container {
-    max-width: 100%; /* ← 760px から 100% に変更 */
+  .container {
+    max-width: 100%;
     margin: 0 auto;
     background: #ffffff;
-    /* ...以下同じ */
   }
   /* ポータル戻るナビ */
   .back-link {
@@ -39,8 +38,8 @@
   }
   .back-link:hover { text-decoration: underline; }
 
-  /* サブタブUI */
-  .sub-tab-nav {
+  /* サブタブUI（親と被らない独自の命名に変更） */
+  .subtheme-tab-nav {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
@@ -48,7 +47,7 @@
     padding-bottom: 8px;
     flex-wrap: wrap;
   }
-  .tab-btn {
+  .subtheme-tab-btn {
     background: #EBF8FA;
     color: #00819E;
     border: 1px solid #00A8CD;
@@ -59,20 +58,20 @@
     cursor: pointer;
     transition: all .15s ease;
   }
-  .tab-btn:hover {
+  .subtheme-tab-btn:hover {
     background: #D8F2F6;
   }
-  .tab-btn.active {
+  .subtheme-tab-btn.subtheme-active {
     background: #00A8CD;
     color: #ffffff;
   }
 
-  /* タブコンテンツ制御 */
-  .tab-content {
-    display: none;
+  /* タブコンテンツ制御（親と被らない独自の命名に変更） */
+  .subtheme-tab-content {
+    display: none !important;
   }
-  .tab-content.active {
-    display: block;
+  .subtheme-tab-content.subtheme-active {
+    display: block !important;
   }
 
   /* コンテンツ内共通パーツ */
@@ -229,17 +228,17 @@
   <a href="index.html" class="back-link">← ポータル（トップ）へ戻る</a>
 
   <!-- サブタブ ナビゲーション -->
-  <div class="sub-tab-nav">
-    <button class="tab-btn active" onclick="switchTab('tab-patterns', this)">一次関数の式 パターン別</button>
-    <button class="tab-btn" onclick="switchTab('tab-area-step', this)">面積を求め方の手順</button>
-    <button class="tab-btn" onclick="switchTab('tab-bisect', this)">面積を2等分する直線</button>
+  <div class="subtheme-tab-nav">
+    <button class="subtheme-tab-btn subtheme-active" onclick="switchThemeSubTab('tab-patterns', this)">① 式の決定（パターン別）</button>
+    <button class="subtheme-tab-btn" onclick="switchThemeSubTab('tab-area-step', this)">② 面積の求め方の手順</button>
+    <button class="subtheme-tab-btn" onclick="switchThemeSubTab('tab-bisect', this)">③ 面積を2等分する直線</button>
   </div>
 
 
   <!-- ==========================================
        TAB 1: 一次関数の式 パターン別
   ========================================== -->
-  <div id="tab-patterns" class="tab-content active">
+  <div id="tab-patterns" class="subtheme-tab-content subtheme-active">
     <div class="header-tag">【一次関数】式の決定（パターン別攻略）</div>
 
     <div class="box-premise">
@@ -395,7 +394,7 @@
   <!-- ==========================================
        TAB 2: 面積を求め方の手順
   ========================================== -->
-  <div id="tab-area-step" class="tab-content">
+  <div id="tab-area-step" class="subtheme-tab-content">
     <div class="header-tag">【一次関数】面積の求め方の手順</div>
 
     <div class="box-prob">
@@ -488,7 +487,7 @@
   <!-- ==========================================
        TAB 3: 面積を2等分する直線
   ========================================== -->
-  <div id="tab-bisect" class="tab-content">
+  <div id="tab-bisect" class="subtheme-tab-content">
     <div class="header-tag">【一次関数】面積を2等分する直線の式は？</div>
 
     <p>面積を2等分する問題の考え方と計算手順を整理する。</p>
@@ -555,16 +554,30 @@
 </div>
 
 <script>
-// サブタブ切り替えロジック
-function switchTab(tabId, btnEl) {
-  // すべてのタブコンテンツを非表示
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  // すべてのタブボタンのactiveクラスを解除
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+// サブタブ切り替え専用ロジック（親のスクリプトと干渉しない独立処理）
+function switchThemeSubTab(tabId, btnEl) {
+  // テーマ別サブタブのすべてのコンテンツを非表示
+  document.querySelectorAll('.subtheme-tab-content').forEach(el => {
+    el.classList.remove('subtheme-active');
+  });
+  // テーマ別サブタブのすべてのボタンのactive状態を解除
+  document.querySelectorAll('.subtheme-tab-btn').forEach(el => {
+    el.classList.remove('subtheme-active');
+  });
   
-  // 対象のタブとボタンを有効化
-  document.getElementById(tabId).classList.add('active');
-  btnEl.classList.add('active');
+  // 選択されたタブとボタンを有効化
+  const target = document.getElementById(tabId);
+  if (target) {
+    target.classList.add('subtheme-active');
+  }
+  if (btnEl) {
+    btnEl.classList.add('subtheme-active');
+  }
+
+  // 数式(MathJax)の再描画命令
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    MathJax.typesetPromise();
+  }
 }
 
 // 共通自動採点ロジック
