@@ -7020,11 +7020,10 @@ window.MathJax = {
 
       <!-- サブタブバー -->
 <div class="sub-tab-bar">
-  <button class="sub-tab-btn active" id="stab-theme-a" onclick="switchSubTab('theme-a', this)">① 式の決定（パターン別）</button>
-  <button class="sub-tab-btn" id="stab-theme-b" onclick="switchSubTab('theme-b', this)">② 面積の求め方の手順</button>
-  <button class="sub-tab-btn" id="stab-theme-c" onclick="switchSubTab('theme-c', this)">③ 面積を2等分する直線</button>
+  <button class="sub-tab-btn active" id="stab-theme-a" onclick="switchSubTab('theme', 'a')">① 式の決定（パターン別）</button>
+  <button class="sub-tab-btn" id="stab-theme-b" onclick="switchSubTab('theme', 'b')">② 面積の求め方の手順</button>
+  <button class="sub-tab-btn" id="stab-theme-c" onclick="switchSubTab('theme', 'c')">③ 面積を2等分する直線</button>
 </div>
-
       <!-- ======================================================= -->
       <!-- タブ1: 式の決定 -->
       <!-- ======================================================= -->
@@ -10303,26 +10302,50 @@ function switchUnit(grade, unitId) {
   document.getElementById('contentArea').scrollTop = 0;
 }
 
-// ===== SUB-TAB SWITCH (修正版) =====
+// ===== SUB-TAB SWITCH (万能完全版) =====
 function switchSubTab(unitId, sub) {
-  // Toggle sub-tab buttons
-  document.querySelectorAll(`[id^="stab-${unitId}"]`).forEach(b => b.classList.remove('active'));
-  const activeBtn = document.getElementById(`stab-${unitId}-${sub}`); // ← "-" を追加
-  if (activeBtn) activeBtn.classList.add('active');
-  
-  // Toggle sub-panels
-  document.querySelectorAll(`[id^="sp-${unitId}"]`).forEach(p => {
+  // 1. 引数の渡し方（'theme', 'b' なのか 'theme-b' なのか）を自動判定してIDを特定する
+  let targetBtnId = '';
+  let targetPanelId = '';
+  let prefix = unitId;
+
+  if (sub !== undefined) {
+    // 2つの引数で渡された場合: switchSubTab('theme', 'b')
+    targetBtnId = `stab-${unitId}-${sub}`;
+    targetPanelId = `sp-${unitId}-${sub}`;
+  } else {
+    // 1つの引数で渡された場合: switchSubTab('theme-b')
+    targetBtnId = `stab-${unitId}`;
+    targetPanelId = `sp-${unitId}`;
+    // 前半のプレフィックス（"theme"など）を取り出す
+    prefix = unitId.split('-')[0];
+  }
+
+  // 2. 該当グループのすべてのボタンから active を外し、対象ボタンに付与
+  document.querySelectorAll(`[id^="stab-${prefix}"]`).forEach(b => {
+    b.classList.remove('active');
+  });
+  const activeBtn = document.getElementById(targetBtnId);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
+
+  // 3. 該当グループのすべてのパネルを非表示にし、対象パネルを表示
+  document.querySelectorAll(`[id^="sp-${prefix}"]`).forEach(p => {
     p.classList.remove('active');
-    p.style.display = 'none'; // ← 確実に非表示にする
+    p.style.setProperty('display', 'none', 'important'); // 強制非表示
   });
   
-  const activePanel = document.getElementById(`sp-${unitId}-${sub}`); // ← "-" を追加
+  const activePanel = document.getElementById(targetPanelId);
   if (activePanel) {
     activePanel.classList.add('active');
-    activePanel.style.display = 'block'; // ← 確実に表示する
+    activePanel.style.setProperty('display', 'block', 'important'); // 強制表示
   }
-  
-  renderMath();
+
+  // 4. 数式の再描画
+  if (typeof renderMath === 'function') {
+    renderMath();
+  }
 }
 // ===== SECTION TOGGLE =====
 function toggleSection(header) {
