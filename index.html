@@ -7181,106 +7181,199 @@ window.MathJax = {
         </div>
       </div>
 
-      <!-- ======================================================= -->
-      <!-- タブ2: 面積の求め方の手順 -->
-      <!-- ======================================================= -->
-      <div class="sub-panel" id="sp-theme-b">
-        <div class="section-block">
-          <div class="section-body open">
-            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
-              <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
-              直線 \(y = \frac{1}{2}x + 3\) と直線 \(y = -x + 6\) の交点を A、\(x\) 軸との交点をそれぞれ B, C とするとき、\(\triangle\text{ABC}\) の面積を求めよ。
-            </div>
+     <!-- ======================================================= -->
+<!-- タブ2: 面積の求め方の手順 -->
+<!-- ======================================================= -->
+<div class="sub-panel" id="sp-theme-b">
+  <div class="section-block">
+    <div class="section-body open">
+      
+      <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+        直線 $y = \frac{1}{2}x + 3$ と直線 $y = -x + 6$ の交点を A、 $x$ 軸との交点をそれぞれ B, C とするとき、$\triangle\text{ABC}$ の面積を求めよ。
+      </div>
 
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">1. 各頂点の座標を求める</h3>
-            <p>① 点B（\(x\) 軸交点）： \(0 = \frac{1}{2}x + 3 \implies \text{B}(-6, 0)\)</p>
-            <p>② 点C（\(x\) 軸交点）： \(0 = -x + 6 \implies \text{C}(6, 0)\)</p>
-            <p>③ 点A（連立方程式の交点）： \(-x + 6 = \frac{1}{2}x + 3 \implies \text{A}(2, 4)\)</p>
+      <!-- グラフ表示① -->
+      <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:12px;">
+        <svg width="360" height="200" viewBox="-180 -130 360 200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+          <!-- 軸 -->
+          <line x1="-150" y1="0" x2="150" y2="0" stroke="#333" stroke-width="1.5" />
+          <polygon points="150,0 142,-4 142,4" fill="#333" />
+          <text x="158" y="4" font-size="13" font-style="italic">x</text>
+          <line x1="0" y1="50" x2="0" y2="-120" stroke="#333" stroke-width="1.5" />
+          <polygon points="0,-120 -4,-112 4,-112" fill="#333" />
+          <text x="-12" y="-115" font-size="13" font-style="italic">y</text>
+          <text x="-12" y="16" font-size="12" font-style="italic">O</text>
+          <!-- 直線1 & 直线2 -->
+          <line x1="-140" y1="40" x2="120" y2="-90" stroke="#00A8CD" stroke-width="1.5" />
+          <line x1="-40" y1="-100" x2="90" y2="30" stroke="#C8A96E" stroke-width="1.5" />
+          <!-- 頂点 A, B, C -->
+          <circle cx="20" y="-40" r="4" fill="#C8443A" />
+          <text x="18" y="-50" font-size="14" font-weight="bold">A</text>
+          <circle cx="-120" y="0" r="4" fill="#C8443A" />
+          <text x="-125" y="-10" font-size="14" font-weight="bold">B</text>
+          <circle cx="60" y="0" r="4" fill="#C8443A" />
+          <text x="65" y="-10" font-size="14" font-weight="bold">C</text>
+        </svg>
+      </div>
 
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">2. 底辺と高さを求める</h3>
-            <p>・底辺（横）： \(6 - (-6) = 12\)</p>
-            <p>・高さ（縦）： 点Aの \(y\) 座標 \(= 4\)</p>
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:24px 0 12px;">1. 各頂点の座標を求める</h3>
+      <p>① 点B（$x$ 軸交点）： $0 = \frac{1}{2}x + 3 \implies \text{B}(-6, 0)$</p>
+      <p>② 点C（$x$ 軸交点）： $0 = -x + 6 \implies \text{C}(6, 0)$</p>
+      <p>③ 点A（連立方程式の交点）： $-x + 6 = \frac{1}{2}x + 3 \implies \text{A}(2, 4)$</p>
 
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">3. 面積を計算する</h3>
-            <p>\[ \triangle\text{ABC} = 12 \times 4 \times \frac{1}{2} = 24 \]</p>
-            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(24\)</div>
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:28px 0 12px;">2. 底辺と高さを求める</h3>
+      
+      <!-- グラフ表示② (底辺と高さの可視化) -->
+      <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:12px;">
+        <svg width="360" height="220" viewBox="-180 -130 360 220" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+          <defs>
+            <marker id="arrow-left" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 10 0 L 0 5 L 10 10 z" fill="#C8443A"/></marker>
+            <marker id="arrow-right" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C8443A"/></marker>
+          </defs>
+          <line x1="-150" y1="0" x2="150" y2="0" stroke="#333" stroke-width="1.5" />
+          <line x1="0" y1="60" x2="0" y2="-120" stroke="#333" stroke-width="1.5" />
+          <line x1="-140" y1="40" x2="120" y2="-90" stroke="#AAA" stroke-width="1" />
+          <line x1="-40" y1="-100" x2="90" y2="30" stroke="#AAA" stroke-width="1" />
+          <!-- 高さ（破線） -->
+          <line x1="20" y1="-40" x2="20" y2="0" stroke="#C8443A" stroke-width="1.5" stroke-dasharray="3" />
+          <circle cx="20" y="-40" r="4" fill="#C8443A" />
+          <text x="12" y="-50" font-size="13" font-weight="bold">A(2, 4)</text>
+          <circle cx="-120" y="0" r="4" fill="#C8443A" />
+          <text x="-155" y="-12" font-size="12" fill="#C8443A" font-weight="bold">B(-6, 0)</text>
+          <circle cx="60" r="4" cy="0" fill="#C8443A" />
+          <text x="55" y="-12" font-size="12" fill="#C8443A" font-weight="bold">C(6, 0)</text>
+          <text x="28" y="-15" font-size="13" fill="#C8443A" font-weight="bold">高さ = 4</text>
+          <!-- 底辺矢印 -->
+          <line x1="-120" y1="35" x2="60" y2="35" stroke="#C8443A" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)" />
+          <text x="-45" y="55" font-size="14" fill="#C8443A" font-weight="bold">底辺 = 12</text>
+        </svg>
+      </div>
 
-            <!-- 類題 -->
-            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
-              <strong style="color:#00A8CD;">【類題】</strong><br>
-              直線 \(y = x + 3\) と直線 \(y = -2x + 6\) の交点を A とし、それぞれの直線と \(x\) 軸との交点を B, C とする。<br>
-              \(\triangle\text{ABC}\) の面積を求めよ。
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
-              <label for="ans-area" style="font-weight:bold; font-size:14px;">答え：</label>
-              <input type="text" id="ans-area" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: 12" autocomplete="off">
-              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-area', 'score-area', 'wrap-area', 'btn-area', '12', '12', '一次関数 - 面積の求め方類題')">✔ 採点する</button>
-            </div>
-            <div id="score-area"></div>
-            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-area" onclick="toggleAns('wrap-area', 'btn-area')">▶ 解答・解説を見る</button>
-            <div id="wrap-area" style="display:none; margin-top:8px;">
-              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
-                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">\(12\)</span></p>
-                <p style="margin-top:6px;"><b>【解説】</b><br>
-                交点 A \((1, 4)\)、B \((-3, 0)\)、C \((3, 0)\)。<br>
-                底辺 BC \(= 3 - (-3) = 6\)、高さ \(= 4\)。<br>
-                \(\text{面積} = 6 \times 4 \times \frac{1}{2} = 12\)。</p>
-              </div>
-            </div>
+      <p>・底辺（横）： $6 - (-6) = 12$</p>
+      <p>・高さ（縦）： 点Aの $y$ 座標 $= 4$</p>
 
-          </div>
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:28px 0 12px;">3. 面積を計算する</h3>
+      <p>$$ \triangle\text{ABC} = 12 \times 4 \times \frac{1}{2} = 24 $$</p>
+      <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： $24$</div>
+
+      <!-- 類題 -->
+      <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:24px 0 10px;">
+        <strong style="color:#00A8CD;">【類題】</strong><br>
+        直線 $y = x + 3$ と直線 $y = -2x + 6$ の交点を A とし、それぞれの直線と $x$ 軸との交点を B, C とする。<br>
+        $\triangle\text{ABC}$ の面積を求めよ。
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+        <label for="ans-area" style="font-weight:bold; font-size:14px;">答え：</label>
+        <input type="text" id="ans-area" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: 12" autocomplete="off">
+        <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-area', 'score-area', 'wrap-area', 'btn-area', '12', '12', '一次関数 - 面積の求め方類題')">✔ 採点する</button>
+      </div>
+      <div id="score-area"></div>
+      <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-area" onclick="toggleAnswer('wrap-area', this)">▶ 解答・解説を見る</button>
+      <div id="wrap-area" style="display:none; margin-top:8px;">
+        <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+          <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">$12$</span></p>
+          <p style="margin-top:6px;"><b>【解説】</b><br>
+          交点 A $(1, 4)$、B $(-3, 0)$、C $(3, 0)$。<br>
+          底辺 BC $= 3 - (-3) = 6$、高さ $= 4$。<br>
+          $\text{面積} = 6 \times 4 \times \frac{1}{2} = 12$。</p>
         </div>
       </div>
 
-      <!-- ======================================================= -->
-      <!-- タブ3: 面積を2等分する直線 -->
-      <!-- ======================================================= -->
-      <div class="sub-panel" id="sp-theme-c">
-        <div class="section-block">
-          <div class="section-body open">
-            <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
-              <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
-              点Aを通り \(\triangle \text{ABC}\) の面積を2等分する直線の式を求めよ。
-            </div>
+    </div>
+  </div>
+</div>
 
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">1. 考え方のポイント</h3>
-            <p>頂点Aを通り \(\triangle\text{ABC}\) の面積を2等分する場合、求める直線は<b>対辺BCの中点</b>を通ればよい。</p>
+     <!-- ======================================================= -->
+<!-- タブ3: 面積を2等分する直線 -->
+<!-- ======================================================= -->
+<div class="sub-panel" id="sp-theme-c">
+  <div class="section-block">
+    <div class="section-body open">
 
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">2. 座標の計算手順</h3>
-            <p>2点 \((a, b)\) と \((c, d)\) の中点： \(\left( \frac{a+c}{2}, \; \frac{b+d}{2} \right)\)</p>
-
-            <h3 style="font-size:16px; color:#7A5A10; margin:20px 0 8px;">3. 求める直線の式</h3>
-            <p>点 A \((2, 4)\) と 原点 \((0, 0)\) を通る直線 \(y = ax\) に代入する。</p>
-            <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = 2x\)</div>
-
-            <!-- 類題 -->
-            <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:16px 0 10px;">
-              <strong style="color:#00A8CD;">【類題】</strong><br>
-              直線 \(y = x + 4\) と直線 \(y = -2x + 10\) の交点を A とし、それぞれの直線と \(x\) 軸との交点を B, C とする。<br>
-              点 A を通り、\(\triangle\text{ABC}\) の面積を2等分する直線の式を求めよ。
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
-              <label for="ans-bisect" style="font-weight:bold; font-size:14px;">答え：</label>
-              <input type="text" id="ans-bisect" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=4x-2" autocomplete="off">
-              <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-bisect', 'score-bisect', 'wrap-bisect', 'btn-bisect', 'y=4x-2', '4x-2', '一次関数 - 面積2等分類題')">✔ 採点する</button>
-            </div>
-            <div id="score-bisect"></div>
-            <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-bisect" onclick="toggleAns('wrap-bisect', 'btn-bisect')">▶ 解答・解説を見る</button>
-            <div id="wrap-bisect" style="display:none; margin-top:8px;">
-              <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
-                <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">\(y = 4x - 2\)</span></p>
-                <p style="margin-top:6px;"><b>【解説】</b><br>
-                1. 交点 \(\text{A}(2, 6)\)、\(\text{B}(-4, 0)\)、\(\text{C}(5, 0)\)<br>
-                2. 辺 BC の中点 M \(\left( \frac{1}{2}, 0 \right)\)<br>
-                3. A \((2, 6)\) と M \(\left( \frac{1}{2}, 0 \right)\) を通る直線の傾き \(a = \frac{6 - 0}{2 - \frac{1}{2}} = 4\)。<br>
-                \(y = 4x + b\) に \((2, 6)\) を代入して \(b = -2\)。よって <b>\(y = 4x - 2\)</b>。</p>
-              </div>
-            </div>
-
-          </div>
+      <!-- 前提条件とグラフの再掲ボックス -->
+      <div style="background: #F4FBFD; border: 1.5px solid #00A8CD; border-radius: 8px; padding: 14px; margin-bottom: 20px;">
+        <div style="font-weight: bold; color: #00819E; font-size: 14px; margin-bottom: 6px;">
+          📌 前提条件の確認（②で求めたグラフと各頂点）
+        </div>
+        <p style="font-size: 13.5px; margin-bottom: 8px;">
+          直線 $y = \frac{1}{2}x + 3$ と 直線 $y = -x + 6$ の交点 <b>A$(2, 4)$</b>、 $x$ 軸交点 <b>B$(-6, 0)$</b>、 <b>C$(6, 0)$</b>
+        </p>
+        <!-- 前提グラフの再掲 -->
+        <div style="text-align:center; background:#ffffff; border:1px solid #BCE5ED; border-radius:6px; padding:8px; margin-top:8px;">
+          <svg width="320" height="150" viewBox="-160 -100 320 150" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+            <line x1="-140" y1="0" x2="140" y2="0" stroke="#333" stroke-width="1.2" />
+            <line x1="0" y1="40" x2="0" y2="-90" stroke="#333" stroke-width="1.2" />
+            <line x1="-130" y1="35" x2="110" y2="-85" stroke="#AAA" stroke-width="1" />
+            <line x1="-35" y1="-85" x2="80" y2="30" stroke="#AAA" stroke-width="1" />
+            <circle cx="18" y="-36" r="3.5" fill="#C8443A" /><text x="22" y="-42" font-size="12" font-weight="bold">A(2, 4)</text>
+            <circle cx="-108" y="0" r="3.5" fill="#C8443A" /><text x="-135" y="-8" font-size="11" font-weight="bold">B(-6, 0)</text>
+            <circle cx="54" y="0" r="3.5" fill="#C8443A" /><text x="58" y="-8" font-size="11" font-weight="bold">C(6, 0)</text>
+          </svg>
         </div>
       </div>
 
+      <div style="background:#FBF7EE; border:1.5px solid #C8A96E; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <strong style="color:#7A5A10; font-size:15px;">【例題】</strong><br>
+        上記の図において、点 A を通り $\triangle\text{ABC}$ の面積を2等分する直線の式を求めよ。
+      </div>
+
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:24px 0 12px;">1. 考え方のポイント</h3>
+      <p>頂点 A を通り $\triangle\text{ABC}$ の面積を2等分する場合、求める直線は<span style="color:#C8443A; font-weight:bold;">対辺 BC の中点 M</span> を通ればよい。</p>
+
+      <!-- 中点を通過する解説図 -->
+      <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:12px;">
+        <svg width="320" height="130" viewBox="-140 -20 320 130" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+          <polygon points="0,0 -90,75 90,75" fill="none" stroke="#333" stroke-width="1.5" />
+          <text x="-5" y="-8" font-size="13" font-weight="bold">A(2, 4)</text>
+          <text x="-125" y="80" font-size="13" font-weight="bold">B(-6, 0)</text>
+          <text x="95" y="80" font-size="13" font-weight="bold">C(6, 0)</text>
+          <!-- 2等分直線 -->
+          <line x1="0" y1="0" x2="0" y2="75" stroke="#C8443A" stroke-width="2" />
+          <circle cx="0" y="75" r="4" fill="#C8443A" />
+          <text x="-22" y="95" font-size="12" fill="#C8443A" font-weight="bold">中点 M(0, 0)</text>
+        </svg>
+      </div>
+
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:28px 0 12px;">2. 座標の計算手順</h3>
+      <div style="border:1.5px solid #2C2C2A; border-radius:6px; padding:12px 16px; margin:12px 0; background:#FAFAF8; text-align:center;">
+        <div style="font-weight:700; color:#8A6A1A; margin-bottom:4px;">【公式】中点の座標</div>
+        <p style="margin-bottom:0;">2点 $(a, b)$ と $(c, d)$ の中点： $\displaystyle \left( \frac{a+c}{2}, \; \frac{b+d}{2} \right)$</p>
+      </div>
+      <p>・BC の中点 M ： $\displaystyle \left( \frac{-6 + 6}{2}, \; \frac{0 + 0}{2} \right) = (0, 0)$ （原点）</p>
+
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:28px 0 12px;">3. 求める直線の式</h3>
+      <p>点 A $(2, 4)$ と 中点 M $(0, 0)$ を通る直線 $y = ax$ に代入する。</p>
+      <p>$$ 4 = 2a \implies a = 2 $$</p>
+      <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： $y = 2x$</div>
+
+      <!-- 類題 -->
+      <div style="background:#FAFAF8; border:1.5px dashed #00A8CD; border-radius:8px; padding:16px; margin:24px 0 10px;">
+        <strong style="color:#00A8CD;">【類題】</strong><br>
+        直線 $y = x + 4$ と直線 $y = -2x + 10$ の交点を A とし、それぞれの直線と $x$ 軸との交点を B, C とする。<br>
+        点 A を通り、$\triangle\text{ABC}$ の面積を2等分する直線の式を求めよ。
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap;">
+        <label for="ans-bisect" style="font-weight:bold; font-size:14px;">答え：</label>
+        <input type="text" id="ans-bisect" style="font-size:15px; padding:7px 12px; border:1.5px solid #C8A96E; border-radius:6px; outline:none; width:200px;" placeholder="例: y=4x-2" autocomplete="off">
+        <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-bisect', 'score-bisect', 'wrap-bisect', 'btn-bisect', 'y=4x-2', '4x-2', '一次関数 - 面積2等分類題')">✔ 採点する</button>
+      </div>
+      <div id="score-area"></div>
+      <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-bisect" onclick="toggleAnswer('wrap-bisect', this)">▶ 解答・解説を見る</button>
+      <div id="wrap-bisect" style="display:none; margin-top:8px;">
+        <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
+          <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">$y = 4x - 2$</span></p>
+          <p style="margin-top:6px;"><b>【解説】</b><br>
+          1. 交点 $\text{A}(2, 6)$、$\text{B}(-4, 0)$、$\text{C}(5, 0)$<br>
+          2. 辺 BC の中点 M $\left( \frac{1}{2}, 0 \right)$<br>
+          3. A $(2, 6)$ と M $\left( \frac{1}{2}, 0 \right)$ を通る直線の傾き $a = \frac{6 - 0}{2 - \frac{1}{2}} = 4$。<br>
+          $y = 4x + b$ に $(2, 6)$ を代入して $b = -2$。よって <b>$y = 4x - 2$</b>。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
     </div>
 
     </div><!-- /panel-theme -->
