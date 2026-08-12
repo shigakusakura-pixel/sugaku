@@ -7312,7 +7312,7 @@ window.MathJax = {
           直線 \(y = \frac{1}{2}x + 3\) と 直線 \(y = -x + 6\) の交点 <b>A(2, 4)</b>、 \(x\) 軸交点 <b>B(-6, 0)</b>、 <b>C(6, 0)</b>
         </p>
         
-        <!-- 前提グラフの再掲 (x軸上の余分な点なし) -->
+        <!-- 前提グラフの再掲 -->
         <div style="text-align:center; background:#ffffff; border:1px solid #BCE5ED; border-radius:6px; padding:12px; margin-top:8px; overflow:hidden;">
           <svg viewBox="-200 -140 400 210" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:440px; display:block; margin:0 auto;">
             <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.2" />
@@ -7327,6 +7327,7 @@ window.MathJax = {
             <line x1="-170" y1="25" x2="150" y2="-135" stroke="#AAA" stroke-width="1" />
             <line x1="-20" y1="-140" x2="150" y2="30" stroke="#AAA" stroke-width="1" />
             
+            <!-- 交点 A, B, C のみ -->
             <circle cx="40" y="-80" r="4" fill="#C8443A" />
             <text x="52" y="-88" font-size="13" font-weight="bold" fill="#2C2C2A">A(2, 4)</text>
 
@@ -7347,27 +7348,27 @@ window.MathJax = {
       <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:24px 0 12px;">1. 考え方のポイント</h3>
       <p>頂点 A を通り \(\triangle\text{ABC}\) の面積を2等分する場合、求める直線は<span style="color:#C8443A; font-weight:bold;">対辺 BC の中点 M</span> を通ればよい。</p>
 
-      <!-- 中点を通過する解説図 (実際のABCの形に合わせた修正版) -->
+      <!-- 中点を通過する解説図（上方の不要な丸を完全削除・綺麗な三角形） -->
       <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:16px; overflow:hidden;">
-        <svg viewBox="-180 -25 360 140" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:420px; display:block; margin:0 auto;">
-          <!-- 実情に合わせた三角形 ABC: B(-120, 80), C(120, 80), A(30, 0) -->
+        <svg viewBox="-180 -30 360 140" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:420px; display:block; margin:0 auto;">
+          <!-- 三角形 ABC (A: 30,0 / B: -120,80 / C: 120,80) -->
           <polygon points="30,0 -120,80 120,80" fill="none" stroke="#333" stroke-width="1.8" />
           
-          <!-- 各頂点ラベル -->
-          <circle cx="30" y="0" r="4" fill="#C8443A" />
+          <!-- 頂点 A -->
+          <circle cx="30" cy="0" r="4.5" fill="#C8443A" />
           <text x="25" y="-10" font-size="13" font-weight="bold" fill="#2C2C2A">A(2, 4)</text>
 
-          <circle cx="-120" y="80" r="4" fill="#333" />
+          <!-- 頂点 B -->
           <text x="-165" y="85" font-size="12" font-weight="bold" fill="#2C2C2A">B(-6, 0)</text>
 
-          <circle cx="120" y="80" r="4" fill="#333" />
+          <!-- 頂点 C -->
           <text x="125" y="85" font-size="12" font-weight="bold" fill="#2C2C2A">C(6, 0)</text>
           
-          <!-- 2等分直線 (A(30,0) と 中点M(0,80) を結ぶ) -->
+          <!-- 2等分直線 (A(30,0) から 中点M(0,80) へ引く赤線) -->
           <line x1="30" y1="0" x2="0" y2="80" stroke="#C8443A" stroke-width="2.2" />
           
           <!-- 中点 M -->
-          <circle cx="0" y="80" r="4.5" fill="#C8443A" />
+          <circle cx="0" cy="80" r="4.5" fill="#C8443A" />
           <text x="-32" y="102" font-size="12" fill="#C8443A" font-weight="bold">中点 M(0, 0)</text>
         </svg>
       </div>
@@ -7379,7 +7380,7 @@ window.MathJax = {
       </div>
       <p>・BC の中点 M ： \(\displaystyle \left( \frac{-6 + 6}{2}, \; \frac{0 + 0}{2} \right) = (0, 0)\) （原点）</p>
 
-      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:28px 0 12px;">3. 求める直線の式</h3>
+      <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:24px 0 12px;">3. 求める直線の式</h3>
       <p>点 A \((2, 4)\) と 中点 M \((0, 0)\) を通る直線 \(y = ax\) に代入する。</p>
       <p>\[ 4 = 2a \implies a = 2 \]</p>
       <div style="font-size:18px; color:#C8443A; font-weight:bold; text-align:center; margin:12px 0;">答え： \(y = 2x\)</div>
@@ -7396,12 +7397,12 @@ window.MathJax = {
         <button style="background:#C8A96E; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-size:14px; font-weight:700; cursor:pointer;" onclick="checkQuiz('ans-bisect', 'score-bisect', 'wrap-bisect', 'btn-bisect', 'y=4x-2', '4x-2', '一次関数 - 面積2等分類題')">✔ 採点する</button>
       </div>
       <div id="score-area"></div>
-      <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-area" onclick="toggleAnswer('wrap-bisect', this)">▶ 解答・解説を見る</button>
+      <button style="width:100%; background:transparent; border:1.5px solid #C8A96E; border-radius:6px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; color:#8A6A1A; margin-top:6px;" id="btn-bisect" onclick="toggleAnswer('wrap-bisect', this)">▶ 解答・解説を見る</button>
       <div id="wrap-bisect" style="display:none; margin-top:8px;">
         <div style="background:#FAF9F5; border:1px solid #DDD5C0; padding:14px; border-radius:6px;">
           <p><b>【解答】</b> <span style="color:#C8443A; font-weight:bold; font-size:16px;">\(y = 4x - 2\)</span></p>
           <p style="margin-top:6px;"><b>【解説】</b><br>
-          1. 交点 A \((2, 6)\)、B \((-3, 0)\)、C \((3, 0)\)<br>
+          1. 交点 A \((2, 6)\)、B \((-3, 0)\)、C \((5, 0)\)<br>
           2. 辺 BC の中点 M \(\left( \frac{1}{2}, 0 \right)\)<br>
           3. A \((2, 6)\) と M \(\left( \frac{1}{2}, 0 \right)\) を通る直線の傾き \(a = \frac{6 - 0}{2 - \frac{1}{2}} = 4\)。<br>
           \(y = 4x + b\) に \((2, 6)\) を代入して \(b = -2\)。よって <b>\(y = 4x - 2\)</b>。</p>
