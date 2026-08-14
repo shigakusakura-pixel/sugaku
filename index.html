@@ -10447,9 +10447,14 @@ function switchSubTab(unitId, sub) {
   let prefix = unitId;
 
 if (sub !== undefined) {
-    // 2つの引数で渡された場合: switchSubTab('3-1', 'b') -> 'stab-3-1b' と 'sp-3-1b' に指定
-    targetBtnId = `stab-${unitId}${sub}`;
-    targetPanelId = `sp-${unitId}${sub}`;
+    // unitId が 'theme' の場合はハイフンあり('stab-theme-a')、それ以外はハイフンなし('stab-3-1a')で判定
+    if (unitId === 'theme') {
+      targetBtnId = `stab-${unitId}-${sub}`;
+      targetPanelId = `sp-${unitId}-${sub}`;
+    } else {
+      targetBtnId = `stab-${unitId}${sub}`;
+      targetPanelId = `sp-${unitId}${sub}`;
+    }
   } else {
     // 1つの引数で渡された場合: switchSubTab('theme-b')
     targetBtnId = `stab-${unitId}`;
