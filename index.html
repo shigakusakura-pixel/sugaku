@@ -10401,6 +10401,14 @@ function switchGrade(grade, event) {
       contentArea.style.padding = '32px 40px 60px';
     }
 
+    // ★【ここから追加】サイドバーの学年表示を切り替える処理
+    document.querySelectorAll('.sidebar-grade').forEach(s => s.classList.remove('active'));
+    const targetSidebar = document.getElementById(`sidebar-${grade}`);
+    if (targetSidebar) {
+      targetSidebar.classList.add('active');
+    }
+    // ★【ここまで追加】
+
     // 学年ごとのサイドバー描画関数が存在すれば呼び出す
     if (typeof renderSidebar === 'function') {
       renderSidebar(grade);
@@ -10438,10 +10446,10 @@ function switchSubTab(unitId, sub) {
   let targetPanelId = '';
   let prefix = unitId;
 
-  if (sub !== undefined) {
-    // 2つの引数で渡された場合: switchSubTab('theme', 'b')
-    targetBtnId = `stab-${unitId}-${sub}`;
-    targetPanelId = `sp-${unitId}-${sub}`;
+if (sub !== undefined) {
+    // 2つの引数で渡された場合: switchSubTab('3-1', 'b') -> 'stab-3-1b' と 'sp-3-1b' に指定
+    targetBtnId = `stab-${unitId}${sub}`;
+    targetPanelId = `sp-${unitId}${sub}`;
   } else {
     // 1つの引数で渡された場合: switchSubTab('theme-b')
     targetBtnId = `stab-${unitId}`;
