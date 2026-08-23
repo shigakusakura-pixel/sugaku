@@ -7193,36 +7193,7 @@ window.MathJax = {
         直線 \(y = \frac{1}{2}x + 3\) と直線 \(y = -x + 6\) の交点を A、 \(x\) 軸との交点をそれぞれ B, C とするとき、\(\triangle\text{ABC}\) の面積を求めよ。
       </div>
 
-      <!-- グラフ表示① (x軸上の余分な赤丸を完全削除) -->
-      <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:16px; overflow:hidden;">
-        <svg viewBox="-200 -140 400 210" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:440px; display:block; margin:0 auto;">
-          <!-- x軸・y軸 -->
-          <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.2" />
-          <polygon points="160,0 153,-3.5 153,3.5" fill="#333" />
-          <text x="168" y="4" font-size="13" font-style="italic" fill="#333">x</text>
-
-          <line x1="0" y1="50" x2="0" y2="-120" stroke="#333" stroke-width="1.2" />
-          <polygon points="0,-120 -3.5,-113 3.5,-113" fill="#333" />
-          <text x="-18" y="-115" font-size="13" font-style="italic" fill="#333">y</text>
-          <text x="-12" y="16" font-size="12" font-style="italic" fill="#333">O</text>
-
-          <!-- 直線1 & 直線2 -->
-          <line x1="-170" y1="25" x2="150" y2="-135" stroke="#00A8CD" stroke-width="2" />
-          <line x1="-20" y1="-140" x2="150" y2="30" stroke="#C8A96E" stroke-width="2" />
-
-          <!-- 交点 A(2, 4) -->
-          <circle cx="40" y="-80" r="4.5" fill="#C8443A" />
-          <text x="36" y="-92" font-size="14" font-weight="bold" fill="#2C2C2A">A</text>
-          
-          <!-- 交点 B(-6, 0) -->
-          <circle cx="-120" y="0" r="4.5" fill="#C8443A" />
-          <text x="-125" y="-12" font-size="14" font-weight="bold" fill="#2C2C2A">B</text>
-          
-          <!-- 交点 C(6, 0) -->
-          <circle cx="120" y="0" r="4.5" fill="#C8443A" />
-          <text x="115" y="-12" font-size="14" font-weight="bold" fill="#2C2C2A">C</text>
-        </svg>
-      </div>
+   
 
       <h3 style="font-size:16.5px; color:#7A5A10; border-bottom:2px solid #C8A96E; padding-bottom:4px; margin:24px 0 12px;">1. 各頂点の座標を求める</h3>
       <p>① 点B（\(x\) 軸交点）： \(0 = \frac{1}{2}x + 3 \implies \text{B}(-6, 0)\)</p>
@@ -7233,7 +7204,7 @@ window.MathJax = {
       
       <!-- グラフ表示② -->
       <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:16px; overflow:hidden;">
-        <svg viewBox="-200 -140 400 230" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:480px; display:block; margin:0 auto;">
+        <svg viewBox="-200 -140 400 230" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:480px; display:block; margin:0 auto;">
           <defs>
             <marker id="arrow-left" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 10 0 L 0 5 L 10 10 z" fill="#C8443A"/></marker>
             <marker id="arrow-right" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C8443A"/></marker>
@@ -7314,7 +7285,7 @@ window.MathJax = {
         
         <!-- 前提グラフの再掲 -->
         <div style="text-align:center; background:#ffffff; border:1px solid #BCE5ED; border-radius:6px; padding:12px; margin-top:8px; overflow:hidden;">
-          <svg viewBox="-200 -140 400 210" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:440px; display:block; margin:0 auto;">
+          <svg viewBox="-200 -140 400 210" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:440px; display:block; margin:0 auto;">
             <line x1="-160" y1="0" x2="160" y2="0" stroke="#333" stroke-width="1.2" />
             <polygon points="160,0 153,-3.5 153,3.5" fill="#333" />
             <text x="168" y="4" font-size="13" font-style="italic" fill="#333">x</text>
@@ -7350,7 +7321,7 @@ window.MathJax = {
 
       <!-- 中点を通過する解説図（上方の不要な丸を完全削除・綺麗な三角形） -->
       <div style="text-align:center; margin:16px 0; background:#FAFAF8; border:1px solid #EDE5D0; border-radius:8px; padding:16px; overflow:hidden;">
-        <svg viewBox="-180 -30 360 140" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width:420px; display:block; margin:0 auto;">
+        <svg viewBox="-180 -30 360 140" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:420px; display:block; margin:0 auto;">
           <!-- 三角形 ABC (A: 30,0 / B: -120,80 / C: 120,80) -->
           <polygon points="30,0 -120,80 120,80" fill="none" stroke="#333" stroke-width="1.8" />
           
