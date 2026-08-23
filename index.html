@@ -32,14 +32,15 @@ family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&displ
      数学テーマ別 採点・解説 開閉スクリプト
 ========================================== -->
 <script>
-// 採点ロジック（グローバル登録）
+// 採点ロジック（7000行統合用）
 window.checkQuiz = function(inputId, scoreId, wrapId, btnId, target1, target2, titleName) {
   var inputEl = document.getElementById(inputId);
   var scoreArea = document.getElementById(scoreId);
+  var wrap = document.getElementById(wrapId);
+  var btn = document.getElementById(btnId);
 
   if (!inputEl || !scoreArea) return;
 
-  // 全角英数の半角化、全角ハイフン・長音をマイナスに変換
   var val = inputEl.value
     .replace(/[！-～]/g, function(s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0); })
     .replace(/[ー−―]/g, '-')
@@ -58,15 +59,17 @@ window.checkQuiz = function(inputId, scoreId, wrapId, btnId, target1, target2, t
 
   if (isCorrect) {
     scoreArea.innerHTML = '<div class="score-box" style="color:#3B6D11; background:#EAF3DE; border-color:#3B6D11;">🎉 ⭕ 正解！完璧です！（答え: ' + target1 + '）</div>';
-    var wrap = document.getElementById(wrapId);
-    var btn = document.getElementById(btnId);
-    if (wrap) wrap.classList.add('open');
-    if (btn) btn.textContent = '▼ 解答・解説を閉じる';
+    if (wrap) {
+      wrap.style.display = 'block';
+      wrap.classList.add('open');
+    }
+    if (btn) {
+      btn.textContent = '▼ 解答・解説を閉じる';
+    }
   } else {
     scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D; background:#FCEBEB; border-color:#A32D2D;">❌ 不正解... もう一度計算してみよう！</div>';
   }
 
-  // Firebase連携
   try {
     if (typeof window.sendResultToFirebase === 'function') {
       window.sendResultToFirebase("数学", titleName, isCorrect ? 1 : 0, 1);
@@ -76,16 +79,27 @@ window.checkQuiz = function(inputId, scoreId, wrapId, btnId, target1, target2, t
   }
 };
 
-// 折りたたみ解説表示ロジック（グローバル登録）
+// 折りたたみ解説表示ロジック（表示・非表示の強制切り替え）
 window.toggleAns = function(wrapId, btnId) {
   var wrap = document.getElementById(wrapId);
   var btn = document.getElementById(btnId);
   if (!wrap || !btn) return;
-  var isOpen = wrap.classList.toggle('open');
-  btn.textContent = isOpen ? '▼ 解答・解説を閉じる' : '▶ 解答・解説を見る';
+
+  // 計算された現在の表示状態を確認
+  var currentDisplay = window.getComputedStyle(wrap).display;
+
+  if (currentDisplay === 'none') {
+    wrap.style.display = 'block';
+    wrap.classList.add('open');
+    btn.textContent = '▼ 解答・解説を閉じる';
+  } else {
+    wrap.style.display = 'none';
+    wrap.classList.remove('open');
+    btn.textContent = '▶ 解答・解説を見る';
+  }
 };
 
-// タブ切り替えロジック（グローバル登録）
+// タブ切り替えロジック
 window.switchTab = function(tabId, btnEl) {
   document.querySelectorAll('.tab-content').forEach(function(el) {
     el.classList.remove('active');
