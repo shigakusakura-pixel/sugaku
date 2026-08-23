@@ -554,18 +554,15 @@
 </div>
 
 <script>
-// サブタブ切り替え専用ロジック（親のスクリプトと干渉しない独立処理）
+// サブタブ切り替え専用ロジック
 function switchThemeSubTab(tabId, btnEl) {
-  // テーマ別サブタブのすべてのコンテンツを非表示
-  document.querySelectorAll('.subtheme-tab-content').forEach(el => {
+  document.querySelectorAll('.subtheme-tab-content').forEach(function(el) {
     el.classList.remove('subtheme-active');
   });
-  // テーマ別サブタブのすべてのボタンのactive状態を解除
-  document.querySelectorAll('.subtheme-tab-btn').forEach(el => {
+  document.querySelectorAll('.subtheme-tab-btn').forEach(function(el) {
     el.classList.remove('subtheme-active');
   });
-  
-  // 選択されたタブとボタンを有効化
+
   const target = document.getElementById(tabId);
   if (target) {
     target.classList.add('subtheme-active');
@@ -574,7 +571,6 @@ function switchThemeSubTab(tabId, btnEl) {
     btnEl.classList.add('subtheme-active');
   }
 
-  // 数式(MathJax)の再描画命令
   if (window.MathJax && window.MathJax.typesetPromise) {
     MathJax.typesetPromise();
   }
@@ -584,20 +580,32 @@ function switchThemeSubTab(tabId, btnEl) {
 function checkQuiz(inputId, scoreId, wrapId, btnId, target1, target2, titleName) {
   const inputEl = document.getElementById(inputId);
   const scoreArea = document.getElementById(scoreId);
-  
-  let val = inputEl.value.replace(/\s+/g, '').toLowerCase();
-  
+
+  if (!inputEl || !scoreArea) return;
+
+  // 全角英数を半角に変換し、全角ハイフン・長音を半角マイナスに統一
+  let val = inputEl.value
+    .replace(/[！-～]/g, function(s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0); })
+    .replace(/[ー−―]/g, '-')
+    .replace(/\s+/g, '')
+    .toLowerCase();
+
   if (!val) {
     scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D;">答えを入力してください。</div>';
     return;
   }
 
-  const isCorrect = (val === target1.toLowerCase() || val === target2.toLowerCase());
+  const cleanTarget1 = target1 ? target1.replace(/\s+/g, '').toLowerCase() : '';
+  const cleanTarget2 = target2 ? target2.replace(/\s+/g, '').toLowerCase() : '';
+
+  const isCorrect = (val === cleanTarget1 || (cleanTarget2 && val === cleanTarget2));
 
   if (isCorrect) {
-    scoreArea.innerHTML = `<div class="score-box" style="color:#3B6D11; background:#EAF3DE; border-color:#3B6D11;">🎉 ⭕ 正解！完璧です！（答え: ${target1}）</div>`;
-    document.getElementById(wrapId).classList.add('open');
-    document.getElementById(btnId).textContent = '▼ 解答・解説を閉じる';
+    scoreArea.innerHTML = '<div class="score-box" style="color:#3B6D11; background:#EAF3DE; border-color:#3B6D11;">🎉 ⭕ 正解！完璧です！（答え: ' + target1 + '）</div>';
+    const wrap = document.getElementById(wrapId);
+    const btn = document.getElementById(btnId);
+    if (wrap) wrap.classList.add('open');
+    if (btn) btn.textContent = '▼ 解答・解説を閉じる';
   } else {
     scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D; background:#FCEBEB; border-color:#A32D2D;">❌ 不正解... もう一度計算してみよう！</div>';
   }
@@ -612,6 +620,7 @@ function checkQuiz(inputId, scoreId, wrapId, btnId, target1, target2, titleName)
 function toggleAns(wrapId, btnId) {
   const wrap = document.getElementById(wrapId);
   const btn = document.getElementById(btnId);
+  if (!wrap || !btn) return;
   const isOpen = wrap.classList.toggle('open');
   btn.textContent = isOpen ? '▼ 解答・解説を閉じる' : '▶ 解答・解説を見る';
 }
