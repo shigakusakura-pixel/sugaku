@@ -38,7 +38,7 @@
   }
   .back-link:hover { text-decoration: underline; }
 
-  /* サブタブUI（親と被らない独自の命名に変更） */
+  /* サブタブUI */
   .subtheme-tab-nav {
     display: flex;
     gap: 8px;
@@ -66,7 +66,7 @@
     color: #ffffff;
   }
 
-  /* タブコンテンツ制御（親と被らない独自の命名に変更） */
+  /* タブコンテンツ制御 */
   .subtheme-tab-content {
     display: none !important;
   }
@@ -235,9 +235,7 @@
   </div>
 
 
-  <!-- ==========================================
-       TAB 1: 一次関数の式 パターン別
-  ========================================== -->
+  <!-- TAB 1: 一次関数の式 パターン別 -->
   <div id="tab-patterns" class="subtheme-tab-content subtheme-active">
     <div class="header-tag">【一次関数】式の決定（パターン別攻略）</div>
 
@@ -274,7 +272,7 @@
     </div>
     <div class="answer-input-area">
       <label for="ans-1" style="font-weight:bold; font-size:14px;">答え：</label>
-      <input type="text" id="ans-1" class="math-input" placeholder="例: y=-2x+5" autocomplete="off">
+      <input type="text" id="ans-1" class="math-input" placeholder="例: y=-2x+7" autocomplete="off">
       <button class="check-btn" onclick="checkQuiz('ans-1', 'score-1', 'wrap-1', 'btn-1', 'y=-2x+7', '-2x+7', '一次関数 - パターン1類題')">✔ 採点する</button>
     </div>
     <div id="score-1"></div>
@@ -391,9 +389,7 @@
   </div>
 
 
-  <!-- ==========================================
-       TAB 2: 面積を求め方の手順
-  ========================================== -->
+  <!-- TAB 2: 面積の求め方の手順 -->
   <div id="tab-area-step" class="subtheme-tab-content">
     <div class="header-tag">【一次関数】面積の求め方の手順</div>
 
@@ -484,9 +480,7 @@
   </div>
 
 
-  <!-- ==========================================
-       TAB 3: 面積を2等分する直線
-  ========================================== -->
+  <!-- TAB 3: 面積を2等分する直線 -->
   <div id="tab-bisect" class="subtheme-tab-content">
     <div class="header-tag">【一次関数】面積を2等分する直線の式は？</div>
 
@@ -583,7 +577,7 @@ function checkQuiz(inputId, scoreId, wrapId, btnId, target1, target2, titleName)
 
   if (!inputEl || !scoreArea) return;
 
-  // 全角英数を半角に変換し、全角ハイフン・長音を半角マイナスに統一
+  // 全角数字・英字・記号を半角に正規化し、マイナス・長音をハイフンに統一
   let val = inputEl.value
     .replace(/[！-～]/g, function(s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0); })
     .replace(/[ー−―]/g, '-')
@@ -610,9 +604,13 @@ function checkQuiz(inputId, scoreId, wrapId, btnId, target1, target2, titleName)
     scoreArea.innerHTML = '<div class="score-box" style="color:#A32D2D; background:#FCEBEB; border-color:#A32D2D;">❌ 不正解... もう一度計算してみよう！</div>';
   }
 
-  // Firebase連携
-  if (window.sendResultToFirebase) {
-    window.sendResultToFirebase("数学", titleName, isCorrect ? 1 : 0, 1);
+  // Firebase連携（未定義時のエラー防止ガード付き）
+  try {
+    if (typeof window.sendResultToFirebase === 'function') {
+      window.sendResultToFirebase("数学", titleName, isCorrect ? 1 : 0, 1);
+    }
+  } catch (e) {
+    console.warn("Firebase連携エラー:", e);
   }
 }
 
