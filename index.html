@@ -10622,41 +10622,50 @@ function toggleSection(header) {
 
 // ===== 自己判定＆単元一括送信ロジック =====
 const mathJudgments = {};
-let unitStartTime = Date.now(); // 単元を開いた時間を記録
-
-// タブや単元を切り替えた時にタイマーをリセットする処理
-function resetTimer() {
-  unitStartTime = Date.now();
-  // 判定内容もリセットしたい場合はここに入れる
-}
 
 // 判定ボタンのクリック処理
 window.setJudge = function(qid, result, btn) {
   mathJudgments[qid] = result;
+  
+  // 親要素内のボタンのactiveを切り替え
   const parent = btn.parentElement;
-  parent.querySelectorAll('.btn-judge').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (parent) {
+    parent.querySelectorAll('.btn-judge').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
 };
 
 // 単元保存ボタンのクリック処理
 window.submitCurrentMathUnit = function() {
   const activePanel = document.querySelector('.content-panel.active') || document.getElementById(`panel-${currentUnit}`);
-  const unitTitle = document.querySelector('.unit-btn.active')?.textContent.trim() || `単元 ${currentUnit}`;
+  const activeUnitBtn = document.querySelector('.unit-btn.active');
+  const unitTitle = activeUnitBtn ? activeUnitBtn.textContent.trim() : `単元 ${currentUnit}`;
   
+  // 現在表示されている単元内の全問題パネルを取得
   const panelsInUnit = activePanel ? activePanel.querySelectorAll('[id^="a-"], [id^="ans-"], .ans-panel') : [];
   
   let correct = 0;
   let judgedCount = 0;
 
-  panelsInUnit.forEach(p => {
-    const id = p.id;
-    if (mathJudgments[id] === 'ok') {
-      correct++;
-      judgedCount++;
-    } else if (mathJudgments[id] === 'ng') {
-      judgedCount++;
-    }
-  });
+  // 1. 画面上で active クラスがついているボタンを直接カウント
+  if (activePanel) {
+    const okButtons = activePanel.querySelectorAll('.btn-judge.ok.active');
+    const ngButtons = activePanel.querySelectorAll('.btn-judge.ng.active');
+    correct = okButtons.length;
+    judgedCount = okButtons.length + ngButtons.length;
+  }
+
+  // 2. DOMで拾えなかった場合のフォールバック（オブジェクトから集計）
+  if (judgedCount === 0) {
+    Object.keys(mathJudgments).forEach(id => {
+      if (mathJudgments[id] === 'ok') {
+        correct++;
+        judgedCount++;
+      } else if (mathJudgments[id] === 'ng') {
+        judgedCount++;
+      }
+    });
+  }
 
   if (judgedCount === 0) {
     alert("⚠️ 「答えを見る」を開き、⭕️ または ❌ の判定を1問以上選んでから保存してください。");
@@ -10666,12 +10675,15 @@ window.submitCurrentMathUnit = function() {
   const total = panelsInUnit.length > 0 ? panelsInUnit.length : judgedCount;
 
   // 所要時間（秒）を計算
-  const durationSec = Math.floor((Date.now() - unitStartTime) / 1000);
+  const startTime = (typeof unitStartTime !== 'undefined') ? unitStartTime : Date.now();
+  const durationSec = Math.floor((Date.now() - startTime) / 1000);
 
   if (window.sendResultToFirebase) {
     window.sendResultToFirebase("中学数学", unitTitle, correct, total, durationSec);
-    // 送信後にタイマーをリセット（続けて解く場合のため）
-    unitStartTime = Date.now(); 
+    // 送信後にタイマーをリセット
+    if (typeof unitStartTime !== 'undefined') {
+      unitStartTime = Date.now();
+    }
   }
 };
 
