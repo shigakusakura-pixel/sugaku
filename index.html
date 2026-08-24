@@ -10463,7 +10463,7 @@ window.switchTab = function(tabId, btnEl) {
 let currentGrade = 1;
 let currentUnit = '1-1';
 
-// ===== GRADE SWITCH (決定版) =====
+// ===== GRADE SWITCH (完全修復版) =====
 function switchGrade(grade, event) {
   // 1. 学年タブの active 解除 ＆ 選択されたタブの強調
   document.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
@@ -10474,25 +10474,22 @@ function switchGrade(grade, event) {
     e.target.classList.add('active');
   }
 
-  // 2. すべてのメインコンテンツパネルを非表示
+  // 2. すべてのメインコンテンツパネルを非表示（インラインstyleをクリア）
   document.querySelectorAll('.content-panel').forEach(panel => {
     panel.classList.remove('active');
-    panel.style.display = 'none';
+    panel.style.display = ''; // ★インラインの display:none を解除
   });
 
   // 3. サイドバーおよびコンテンツ領域の表示制御
   const sidebar = document.querySelector('.sidebar');
-  const contentArea = document.querySelector('.content-area');
+  const contentArea = document.querySelector('.content-area') || document.getElementById('contentArea');
 
   if (grade === 'theme') {
-    // 【テーマ別解説パネルを表示】
     const themePanel = document.getElementById('panel-theme');
     if (themePanel) {
       themePanel.classList.add('active');
-      themePanel.style.display = 'block';
     }
     
-    // サイドバーを隠してコンテンツ表示域を最大化する（右寄り・重なり防止）
     if (sidebar) sidebar.style.display = 'none';
     if (contentArea) {
       contentArea.style.maxWidth = '100%';
@@ -10500,29 +10497,23 @@ function switchGrade(grade, event) {
     }
 
   } else {
-    // 【通常の学年（中1〜中3）を表示】
     const targetPanel = document.getElementById(`panel-${grade}-1`);
     if (targetPanel) {
       targetPanel.classList.add('active');
-      targetPanel.style.display = 'block';
     }
     
-    // 通常表示時はサイドバーを表示し、元のレイアウト幅に戻す
     if (sidebar) sidebar.style.display = 'block';
     if (contentArea) {
       contentArea.style.maxWidth = '860px';
       contentArea.style.padding = '32px 40px 60px';
     }
 
-    // ★【ここから追加】サイドバーの学年表示を切り替える処理
     document.querySelectorAll('.sidebar-grade').forEach(s => s.classList.remove('active'));
     const targetSidebar = document.getElementById(`sidebar-${grade}`);
     if (targetSidebar) {
       targetSidebar.classList.add('active');
     }
-    // ★【ここまで追加】
 
-    // 学年ごとのサイドバー描画関数が存在すれば呼び出す
     if (typeof renderSidebar === 'function') {
       renderSidebar(grade);
     }
@@ -10534,24 +10525,37 @@ function switchGrade(grade, event) {
   }
 }
 
-// ===== UNIT SWITCH =====
+// ===== UNIT SWITCH (完全修復版) =====
 function switchUnit(grade, unitId) {
   currentUnit = unitId;
-  // Update all sidebar buttons
+
+  // 1. サイドバーボタンの強調切り替え
   document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector(`[onclick="switchUnit('${grade}','${unitId}')"]`);
+  const btn = document.querySelector(`[onclick*="switchUnit('${grade}'"][onclick*="'${unitId}'"]`) || 
+              document.querySelector(`[onclick*="switchUnit(${grade}"][onclick*="'${unitId}'"]`);
   if (btn) btn.classList.add('active');
-  // Update content panels
-  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+
+  // 2. コンテンツパネルの切り替え（インラインdisplayをクリアしてactiveを付与）
+  document.querySelectorAll('.content-panel').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = ''; // ★インラインの display:none を解除
+  });
+
   const panel = document.getElementById(`panel-${unitId}`);
   if (panel) {
     panel.classList.add('active');
-    renderMath();
+    renderMath(panel);
   }
-  // Scroll to top
-  document.getElementById('contentArea').scrollTop = 0;
 
-  // ▼ 単元を切り替えたらタイマーをリセットして計測スタート
+  // 3. エラーを出さない安全なスクロール
+  const ca = document.getElementById('contentArea') || document.querySelector('.content-area');
+  if (ca) {
+    ca.scrollTop = 0;
+  } else {
+    window.scrollTo(0, 0);
+  }
+
+  // 4. タイマーリセット
   if (typeof unitStartTime !== 'undefined') {
     unitStartTime = Date.now();
   }
@@ -10559,13 +10563,11 @@ function switchUnit(grade, unitId) {
 
 // ===== SUB-TAB SWITCH (万能完全版) =====
 function switchSubTab(unitId, sub) {
-  // 1. 引数の渡し方（'theme', 'b' なのか 'theme-b' なのか）を自動判定してIDを特定する
   let targetBtnId = '';
   let targetPanelId = '';
   let prefix = unitId;
 
-if (sub !== undefined) {
-    // unitId が 'theme' の場合はハイフンあり('stab-theme-a')、それ以外はハイフンなし('stab-3-1a')で判定
+  if (sub !== undefined) {
     if (unitId === 'theme') {
       targetBtnId = `stab-${unitId}-${sub}`;
       targetPanelId = `sp-${unitId}-${sub}`;
@@ -10574,14 +10576,11 @@ if (sub !== undefined) {
       targetPanelId = `sp-${unitId}${sub}`;
     }
   } else {
-    // 1つの引数で渡された場合: switchSubTab('theme-b')
     targetBtnId = `stab-${unitId}`;
     targetPanelId = `sp-${unitId}`;
-    // 前半のプレフィックス（"theme"など）を取り出す
     prefix = unitId.split('-')[0];
   }
 
-  // 2. 該当グループのすべてのボタンから active を外し、対象ボタンに付与
   document.querySelectorAll(`[id^="stab-${prefix}"]`).forEach(b => {
     b.classList.remove('active');
   });
@@ -10590,19 +10589,17 @@ if (sub !== undefined) {
     activeBtn.classList.add('active');
   }
 
-  // 3. 該当グループのすべてのパネルを非表示にし、対象パネルを表示
   document.querySelectorAll(`[id^="sp-${prefix}"]`).forEach(p => {
     p.classList.remove('active');
-    p.style.setProperty('display', 'none', 'important'); // 強制非表示
+    p.style.setProperty('display', 'none', 'important');
   });
   
   const activePanel = document.getElementById(targetPanelId);
   if (activePanel) {
     activePanel.classList.add('active');
-    activePanel.style.setProperty('display', 'block', 'important'); // 強制表示
+    activePanel.style.setProperty('display', 'block', 'important');
   }
 
-  // 4. 数式の再描画
   if (typeof renderMath === 'function') {
     renderMath();
   }
