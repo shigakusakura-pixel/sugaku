@@ -10615,9 +10615,64 @@ function toggleSection(header) {
   }
 }
 
+// ===== 自己判定＆単元一括送信ロジック =====
+const mathJudgments = {};
+
+window.setJudge = function(qid, result, btn) {
+  mathJudgments[qid] = result;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.btn-judge').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+};
+
+window.submitCurrentMathUnit = function() {
+  const activePanel = document.querySelector('.content-panel.active') || document.getElementById(`panel-${currentUnit}`);
+  const unitTitle = document.querySelector('.unit-btn.active')?.textContent.trim() || `単元 ${currentUnit}`;
+  
+  // アクティブな単元パネル内の全問題パネルを取得
+  const panelsInUnit = activePanel ? activePanel.querySelectorAll('[id^="a-"], [id^="ans-"], .ans-panel') : [];
+  
+  let correct = 0;
+  let judgedCount = 0;
+
+  panelsInUnit.forEach(p => {
+    const id = p.id;
+    if (mathJudgments[id] === 'ok') {
+      correct++;
+      judgedCount++;
+    } else if (mathJudgments[id] === 'ng') {
+      judgedCount++;
+    }
+  });
+
+  if (judgedCount === 0) {
+    alert("⚠️ 「答えを見る」を開き、⭕️ または ❌ の判定を1問以上選んでから保存してください。");
+    return;
+  }
+
+  const total = panelsInUnit.length > 0 ? panelsInUnit.length : judgedCount;
+
+  if (window.sendResultToFirebase) {
+    window.sendResultToFirebase("中学数学", unitTitle, correct, total);
+  }
+};
+
 // ===== ANSWER TOGGLE =====
 function toggleAnswer(id, btn) {
   const panel = document.getElementById(id);
+  if (!panel) return;
+
+  // 判定ボタンがまだ無ければ自動挿入
+  if (!panel.querySelector('.judge-buttons')) {
+    const judgeBox = document.createElement('div');
+    judgeBox.className = 'judge-buttons';
+    judgeBox.innerHTML = `
+      <button type="button" class="btn-judge ok" onclick="setJudge('${id}', 'ok', this)">⭕️ 正解できた</button>
+      <button type="button" class="btn-judge ng" onclick="setJudge('${id}', 'ng', this)">❌ 間違えた</button>
+    `;
+    panel.appendChild(judgeBox);
+  }
+
   if (panel.classList.contains('open')) {
     panel.classList.remove('open');
     btn.classList.remove('open');
@@ -10626,12 +10681,7 @@ function toggleAnswer(id, btn) {
     panel.classList.add('open');
     btn.classList.add('open');
     btn.textContent = '閉じる';
-    renderMath();
-
-    // 【追加】「答えを見る」を開いたタイミングでFirebaseに送信
-    if (window.sendLearningRecord) {
-      window.sendLearningRecord(currentUnit, id);
-    }
+    renderMath(panel);
   }
 }
 
@@ -10644,7 +10694,18 @@ function renderMath(el) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // MathJax auto-typesets on load; retry after dynamic content
+  // 各単元パネルの一番下に「単元完了ボタン」を自動配置
+  document.querySelectorAll('.content-panel').forEach(panel => {
+    if (!panel.querySelector('.btn-submit-unit')) {
+      const submitBtn = document.createElement('button');
+      submitBtn.type = 'button';
+      submitBtn.className = 'btn-submit-unit';
+      submitBtn.textContent = '📝 この単元の学習を完了して保存';
+      submitBtn.onclick = submitCurrentMathUnit;
+      panel.appendChild(submitBtn);
+    }
+  });
+
   setTimeout(() => {
     if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err => console.warn('MathJax init:', err));
