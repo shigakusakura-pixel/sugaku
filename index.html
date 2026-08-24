@@ -10550,6 +10550,11 @@ function switchUnit(grade, unitId) {
   }
   // Scroll to top
   document.getElementById('contentArea').scrollTop = 0;
+
+  // ▼ 単元を切り替えたらタイマーをリセットして計測スタート
+  if (typeof unitStartTime !== 'undefined') {
+    unitStartTime = Date.now();
+  }
 }
 
 // ===== SUB-TAB SWITCH (万能完全版) =====
@@ -10617,7 +10622,15 @@ function toggleSection(header) {
 
 // ===== 自己判定＆単元一括送信ロジック =====
 const mathJudgments = {};
+let unitStartTime = Date.now(); // 単元を開いた時間を記録
 
+// タブや単元を切り替えた時にタイマーをリセットする処理
+function resetTimer() {
+  unitStartTime = Date.now();
+  // 判定内容もリセットしたい場合はここに入れる
+}
+
+// 判定ボタンのクリック処理
 window.setJudge = function(qid, result, btn) {
   mathJudgments[qid] = result;
   const parent = btn.parentElement;
@@ -10625,11 +10638,11 @@ window.setJudge = function(qid, result, btn) {
   btn.classList.add('active');
 };
 
+// 単元保存ボタンのクリック処理
 window.submitCurrentMathUnit = function() {
   const activePanel = document.querySelector('.content-panel.active') || document.getElementById(`panel-${currentUnit}`);
   const unitTitle = document.querySelector('.unit-btn.active')?.textContent.trim() || `単元 ${currentUnit}`;
   
-  // アクティブな単元パネル内の全問題パネルを取得
   const panelsInUnit = activePanel ? activePanel.querySelectorAll('[id^="a-"], [id^="ans-"], .ans-panel') : [];
   
   let correct = 0;
@@ -10652,10 +10665,17 @@ window.submitCurrentMathUnit = function() {
 
   const total = panelsInUnit.length > 0 ? panelsInUnit.length : judgedCount;
 
+  // 所要時間（秒）を計算
+  const durationSec = Math.floor((Date.now() - unitStartTime) / 1000);
+
   if (window.sendResultToFirebase) {
-    window.sendResultToFirebase("中学数学", unitTitle, correct, total);
+    window.sendResultToFirebase("中学数学", unitTitle, correct, total, durationSec);
+    // 送信後にタイマーをリセット（続けて解く場合のため）
+    unitStartTime = Date.now(); 
   }
 };
+
+// ...（toggleAnswer など、残りのコードはそのまま）
 
 // ===== ANSWER TOGGLE =====
 function toggleAnswer(id, btn) {
