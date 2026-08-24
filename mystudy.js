@@ -36,9 +36,8 @@ function showLock() {
   document.body.appendChild(lock);
   return lock;
 }
-
-// ② 数学用 送信関数
-window.sendResultToFirebase = async function(passedSubjectName, unitName, correct, total) {
+// ② 数学用 送信関数（durationを追加）
+window.sendResultToFirebase = async function(passedSubjectName, unitName, correct, total, duration = 0) {
   const lock = showLock();
   try {
     const subjectName = "中学数学";
@@ -48,14 +47,19 @@ window.sendResultToFirebase = async function(passedSubjectName, unitName, correc
       unit: unitName,
       correct: correct,
       total: total,
+      duration: duration, // 所要時間（秒）を記録
       action: "単元完了",
       timestamp: serverTimestamp()
     });
     lock.remove();
-    alert(`【記録完了】${unitName}（${correct}/${total}問正解）を保存しました！`);
+    
+    // アラートに所要時間を追加して表示
+    const timeText = duration > 0 ? `（所要時間: ${Math.floor(duration / 60)}分${duration % 60}秒）` : '';
+    alert(`【記録完了】${unitName}（${correct}/${total}問正解）を保存しました！\n${timeText}`);
   } catch (e) {
     console.error("保存失敗:", e);
     lock.remove();
     alert("⚠️ 保存に失敗しました。電波の良い場所で再度お試しください。");
   }
 };
+
