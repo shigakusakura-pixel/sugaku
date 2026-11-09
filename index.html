@@ -657,6 +657,26 @@ window.switchTab = function(tabId, btnEl) {
   .btn-submit-unit:hover {
     opacity: 0.95;
   }
+
+/* 公式・解法資料 */
+#panel-resources .resource-intro{color:var(--text-sub,#576174);line-height:1.8;margin:-8px 0 24px}
+#panel-resources .resource-tabs{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+#panel-resources .resource-tab{flex:1;min-width:220px;text-align:left;border:1.5px solid var(--gray-border,#d2d9e5);border-radius:12px;background:#f5f7fc;padding:18px 22px;color:var(--navy);font:inherit;cursor:pointer}
+#panel-resources .resource-tab strong{display:block;font-size:1.15rem;margin-bottom:6px}
+#panel-resources .resource-tab span{font-size:.9rem;line-height:1.7}
+#panel-resources .resource-tab[aria-selected="true"]{background:#fff;border-color:var(--gold);box-shadow:inset 0 4px 0 var(--gold),0 4px 14px #00000008;color:var(--navy)}
+#panel-resources .resource-tab:focus-visible,#panel-resources a:focus-visible{outline:3px solid #00839f;outline-offset:4px}
+#panel-resources .resource-document[hidden]{display:none!important}
+#panel-resources .resource-document{border:1px solid var(--gray-border,#d2d9e5);border-radius:12px;overflow:hidden;background:#fff}
+#panel-resources .resource-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 22px;border-bottom:1px solid var(--gray-border,#d2d9e5)}
+#panel-resources h3{font-size:1.15rem;margin:0;color:var(--navy)}
+#panel-resources .resource-links{display:flex;gap:10px;flex-wrap:wrap}
+#panel-resources .resource-links a{font-size:.9rem;font-weight:700;padding:8px 14px;border-radius:6px;color:var(--navy);border:1px solid var(--gray-border,#d2d9e5);text-decoration:none}
+#panel-resources .resource-links a:first-child{background:var(--navy);color:#fff;border-color:var(--navy)}
+#panel-resources iframe{display:block;width:100%;height:80vh;min-height:520px;max-height:1100px;border:0;background:#eef0f4}
+#panel-resources .resource-help{margin:0;padding:14px 22px;color:#586174;font-size:.86rem;line-height:1.8;background:#f7f9fc}
+@media(max-width:700px){#panel-resources .resource-tab{min-width:0;flex-basis:100%;padding:14px 16px}#panel-resources .resource-toolbar{padding:16px}#panel-resources iframe{min-height:430px;height:70vh}.grade-tabs{overflow-x:auto}.grade-tab{white-space:nowrap}}
+
 </style>
 <style>
 /* Theme selection: keep the original linear-function lesson intact. */
@@ -690,6 +710,7 @@ window.switchTab = function(tabId, btnEl) {
   <div class="grade-tab" data-grade="2" onclick="switchGrade(2)">中２</div>
   <div class="grade-tab" data-grade="3" onclick="switchGrade(3)">中３</div>
   <div class="grade-tab" onclick="switchGrade('theme')">テーマ別解説</div>
+  <div class="grade-tab" onclick="switchGrade('resources', event)">公式・解法資料</div>
   </div>
 
 <!-- ===== MAIN LAYOUT ===== -->
@@ -7546,6 +7567,27 @@ window.switchTab = function(tabId, btnEl) {
         <iframe id="theme-parabola-frame" data-src="theme-parabola.html?v=20261109" title="放物線と直線：①放物線と交わる直線・②面積・③交点" style="height:950px;" scrolling="no"></iframe>
       </div><!-- /theme-lesson-parabola -->
     </div><!-- /panel-theme -->
+
+    <!-- 公式・解法資料 -->
+    <div class="content-panel" id="panel-resources">
+      <div class="unit-header"><span class="unit-badge" style="background:#00A8CD;color:#fff;">学習資料</span><h2 class="unit-title">公式・解法資料</h2></div>
+      <p class="resource-intro">公式の確認や解法の整理に使える資料です。表示する資料を選んでください。</p>
+      <div class="resource-tabs" role="tablist" aria-label="学習資料を選ぶ">
+        <button type="button" id="resource-tab-formulas" class="resource-tab" role="tab" aria-controls="resource-formulas" aria-selected="true" onclick="selectPdfResource('formulas')"><strong>中学数学公式</strong><span>全9ページ／四分位数・四分位範囲・箱ひげ図を追加</span></button>
+        <button type="button" id="resource-tab-area" class="resource-tab" role="tab" aria-controls="resource-area" aria-selected="false" tabindex="-1" onclick="selectPdfResource('area')"><strong>面積比</strong><span>全1ページ／面積比の公式と代表的なパターン</span></button>
+      </div>
+      <section id="resource-formulas" class="resource-document" role="tabpanel" aria-labelledby="resource-tab-formulas">
+        <div class="resource-toolbar"><h3>中学数学公式</h3><div class="resource-links"><a href="math-formulas.pdf?v=20261109" target="_blank" rel="noopener">別画面で開く</a><a href="math-formulas.pdf?v=20261109" download="中学数学公式.pdf">PDFを保存</a></div></div>
+        <iframe data-src="math-formulas.pdf?v=20261109#view=FitH" title="中学数学公式 全9ページ"></iframe>
+        <p class="resource-help">表示されない場合や、拡大・印刷する場合は「別画面で開く」を選んでください。</p>
+      </section>
+      <section id="resource-area" class="resource-document" role="tabpanel" aria-labelledby="resource-tab-area" hidden>
+        <div class="resource-toolbar"><h3>面積比</h3><div class="resource-links"><a href="area-ratio.pdf?v=20261109" target="_blank" rel="noopener">別画面で開く</a><a href="area-ratio.pdf?v=20261109" download="面積比.pdf">PDFを保存</a></div></div>
+        <iframe data-src="area-ratio.pdf?v=20261109#view=FitH" title="面積比 全1ページ"></iframe>
+        <p class="resource-help">表示されない場合や、拡大・印刷する場合は「別画面で開く」を選んでください。</p>
+      </section>
+    </div><!-- /panel-resources -->
+
     <!-- ============================================================ -->
     <!-- 中3・式の展開と因数分解 (3-1) -->
     <!-- ============================================================ -->
@@ -10504,10 +10546,14 @@ function switchGrade(grade, event) {
   const sidebar = document.querySelector('.sidebar');
   const contentArea = document.querySelector('.content-area') || document.getElementById('contentArea');
 
-  if (grade === 'theme') {
-    const themePanel = document.getElementById('panel-theme');
+  if (grade === 'theme' || grade === 'resources') {
+    const themePanel = document.getElementById(grade === 'theme' ? 'panel-theme' : 'panel-resources');
     if (themePanel) {
       themePanel.classList.add('active');
+      if (grade === 'resources') {
+        const selected = themePanel.querySelector('.resource-tab[aria-selected="true"]');
+        selectPdfResource(selected && selected.id === 'resource-tab-area' ? 'area' : 'formulas');
+      }
     }
     
     if (sidebar) sidebar.style.display = 'none';
@@ -10745,7 +10791,7 @@ function renderMath(el) {
 document.addEventListener('DOMContentLoaded', function() {
   // 各単元パネルの一番下に「単元完了ボタン」を自動配置
   document.querySelectorAll('.content-panel').forEach(panel => {
-    if (!panel.querySelector('.btn-submit-unit')) {
+    if (panel.id !== 'panel-resources' && !panel.querySelector('.btn-submit-unit')) {
       const submitBtn = document.createElement('button');
       submitBtn.type = 'button';
       submitBtn.className = 'btn-submit-unit';
@@ -10773,5 +10819,31 @@ document.addEventListener('DOMContentLoaded', function() {
  const quizTitles={'practice-1':'① 放物線と交わる直線 - 類題1','practice-2':'① 放物線と交わる直線 - 類題2','practice-3':'① 放物線と交わる直線 - 類題3','practice-area1':'② 面積 - 類題1','practice-area2':'② 面積・二等分線 - 類題2','cross-practice-1':'③ 交点 - 類題1','cross-practice-2':'③ 交点 - 類題2','cross-practice-3':'③ 交点 - 類題3'};
  window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.source!==frame.contentWindow||!event.data)return;const data=event.data;if(data.type==='shigaku-parabola-height'&&Number.isFinite(data.height)&&data.height>0&&data.height<100000){frame.style.height=Math.max(950,Math.ceil(data.height))+'px'}else if(data.type==='shigaku-parabola-quiz'&&Object.prototype.hasOwnProperty.call(quizTitles,data.quizId)&&typeof data.correct==='boolean'&&typeof window.sendResultToFirebase==='function'){window.sendResultToFirebase('数学','放物線と直線 - '+quizTitles[data.quizId],data.correct?1:0,1)}});
 })();
-</script></body>
+</script>
+<script>
+function selectPdfResource(id) {
+  if (id !== 'formulas' && id !== 'area') return;
+  ['formulas', 'area'].forEach(name => {
+    const selected = name === id;
+    const button = document.getElementById('resource-tab-' + name);
+    const panel = document.getElementById('resource-' + name);
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    panel.hidden = !selected;
+    const frame = panel.querySelector('iframe');
+    if (selected && !frame.getAttribute('src')) frame.src = frame.dataset.src;
+  });
+}
+document.querySelectorAll('#panel-resources .resource-tab').forEach(button => {
+  button.addEventListener('keydown', event => {
+    if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 'formulas' : event.key === 'End' ? 'area' : button.id === 'resource-tab-area' ? 'formulas' : 'area';
+    selectPdfResource(next);
+    document.getElementById('resource-tab-' + next).focus();
+  });
+});
+</script>
+
+</body>
 </html>
