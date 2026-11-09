@@ -658,7 +658,16 @@ window.switchTab = function(tabId, btnEl) {
     opacity: 0.95;
   }
 </style>
-</head>
+<style>
+/* Theme selection: keep the original linear-function lesson intact. */
+#panel-theme .theme-topic-selector{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 26px;padding:4px 0 18px;border-bottom:1px solid var(--gray-border)}
+#panel-theme .theme-topic-button{font:700 1rem 'Noto Sans JP',sans-serif;border:1.5px solid var(--gold);color:var(--navy);background:#fff;padding:11px 24px;border-radius:8px;cursor:pointer}
+#panel-theme .theme-topic-button.active{color:#fff;background:var(--navy);border-color:var(--navy);box-shadow:0 3px 0 var(--gold)}
+#panel-theme .theme-topic-button:focus-visible{outline:3px solid #00839f;outline-offset:4px}
+#panel-theme .theme-topic-panel[hidden]{display:none!important}
+#panel-theme.parabola-active>.btn-submit-unit{display:none}
+@media(max-width:700px){#panel-theme .theme-topic-button{flex:1;padding:10px 12px;font-size:.92rem}}
+</style></head>
 </style>
 </head>
 <body>
@@ -7155,6 +7164,11 @@ window.switchTab = function(tabId, btnEl) {
     <!-- テーマ別解説 パネル (panel-theme 類題・自動採点完備版) -->
     <!-- ============================================================ -->
     <div class="content-panel" id="panel-theme">
+      <div class="theme-topic-selector" role="tablist" aria-label="テーマを選ぶ">
+        <button type="button" id="theme-select-linear" class="theme-topic-button active" role="tab" aria-selected="true" aria-controls="theme-lesson-linear" data-theme-lesson="linear">一次関数</button>
+        <button type="button" id="theme-select-parabola" class="theme-topic-button" role="tab" aria-selected="false" aria-controls="theme-lesson-parabola" data-theme-lesson="parabola" tabindex="-1">放物線と直線</button>
+      </div>
+      <div id="theme-lesson-linear" class="theme-topic-panel" role="tabpanel" aria-labelledby="theme-select-linear">
       <div class="unit-header">
         <span class="unit-badge" style="background:#00A8CD; color:#fff;">特別単元</span>
         <h2 class="unit-title">一次関数 テーマ別パターン攻略</h2>
@@ -7525,6 +7539,12 @@ window.switchTab = function(tabId, btnEl) {
     </div>
   </div>
 </div>
+
+      </div><!-- /theme-lesson-linear -->
+      <div id="theme-lesson-parabola" class="theme-topic-panel" role="tabpanel" aria-labelledby="theme-select-parabola" hidden>
+        <div class="unit-header"><span class="unit-badge" style="background:#00A8CD;color:#fff;">特別単元</span><h2 class="unit-title">放物線と直線</h2></div>
+        <iframe id="theme-parabola-frame" data-src="theme-parabola.html?v=20261109" title="放物線と直線：①放物線と交わる直線・②面積・③交点" style="height:950px;" scrolling="no"></iframe>
+      </div><!-- /theme-lesson-parabola -->
     </div><!-- /panel-theme -->
     <!-- ============================================================ -->
     <!-- 中3・式の展開と因数分解 (3-1) -->
@@ -10745,5 +10765,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script type="module" src="./mystudy.js"></script>
 
-</body>
+<script>
+(function(){
+ const panel=document.getElementById('panel-theme'),frame=document.getElementById('theme-parabola-frame'),buttons=Array.from(panel.querySelectorAll('[data-theme-lesson]'));
+ function choose(lesson,focus){buttons.forEach(button=>{const active=button.dataset.themeLesson===lesson;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;document.getElementById(button.getAttribute('aria-controls')).hidden=!active;if(active&&focus)button.focus()});panel.classList.toggle('parabola-active',lesson==='parabola');if(lesson==='parabola'){if(!frame.getAttribute('src'))frame.src=frame.dataset.src;else frame.contentWindow.postMessage({type:'shigaku-parabola-measure'},window.location.origin)}else if(typeof renderMath==='function')renderMath(document.getElementById('theme-lesson-linear'))}
+ buttons.forEach((button,index)=>{button.addEventListener('click',()=>choose(button.dataset.themeLesson));button.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();choose(buttons[(index+1)%buttons.length].dataset.themeLesson,true)}})});
+ const quizTitles={'practice-1':'① 放物線と交わる直線 - 類題1','practice-2':'① 放物線と交わる直線 - 類題2','practice-3':'① 放物線と交わる直線 - 類題3','practice-area1':'② 面積 - 類題1','practice-area2':'② 面積・二等分線 - 類題2','cross-practice-1':'③ 交点 - 類題1','cross-practice-2':'③ 交点 - 類題2','cross-practice-3':'③ 交点 - 類題3'};
+ window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.source!==frame.contentWindow||!event.data)return;const data=event.data;if(data.type==='shigaku-parabola-height'&&Number.isFinite(data.height)&&data.height>0&&data.height<100000){frame.style.height=Math.max(950,Math.ceil(data.height))+'px'}else if(data.type==='shigaku-parabola-quiz'&&Object.prototype.hasOwnProperty.call(quizTitles,data.quizId)&&typeof data.correct==='boolean'&&typeof window.sendResultToFirebase==='function'){window.sendResultToFirebase('数学','放物線と直線 - '+quizTitles[data.quizId],data.correct?1:0,1)}});
+})();
+</script></body>
 </html>
